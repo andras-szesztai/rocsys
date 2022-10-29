@@ -1,9 +1,3 @@
-import { Tile } from 'components/molecules/Tile'
-
-import 'styles/globals.css'
-
-const Page = () => (
-    <Tile title="My tile" subtitle="Subtitle" href="/hello" isActive={false} />
-)
+const Page = () => <h1>Home</h1>
 
 export default Page
