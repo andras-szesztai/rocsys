@@ -1,7 +1,9 @@
+import { Tile } from 'components/molecules/Tile'
+
 import 'styles/globals.css'
 
 const Page = () => (
-    <h1 className="text-3xl font-bold underline">Hello, Next.js!</h1>
+    <Tile title="My tile" subtitle="Subtitle" href="/hello" isActive={false} />
 )
 
 export default Page
