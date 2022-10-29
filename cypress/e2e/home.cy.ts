@@ -7,3 +7,5 @@ describe('Home', () => {
         cy.get('h1').contains('Hello, Next.js!')
     })
 })
+
+export {}
