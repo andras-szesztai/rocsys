@@ -6,6 +6,6 @@ import Button from './Button'
 describe('Button', () => {
     it('renders without error', () => {
         render(<Button />)
-        expect(screen.getByText('Hello Button!')).toBeFalsy()
+        expect(screen.getByText('Hello Button!')).toBeTruthy()
     })
 })

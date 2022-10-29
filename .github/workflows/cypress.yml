@@ -4,12 +4,12 @@ jobs:
   e2e:
     if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run Cypress
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4.2.0
         env:
           CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
-          # CYPRESS_SECRET: ${{ secrets.CYPRESS_SECRET }}
-          CYPRESS_RETRIES: 1
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
