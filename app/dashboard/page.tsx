@@ -1,7 +1,3 @@
-import { Tile } from 'components/molecules/Tile'
+const DashboardPage = () => 'This is placeholder'
 
-const Page = () => (
-    <Tile title="My tile" subtitle="Subtitle" href="/hello" isActive={false} />
-)
-
-export default Page
+export default DashboardPage

@@ -9,9 +9,11 @@
         "lint": "next lint",
         "prepare": "husky install",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "generate-graphql-types": "graphql-codegen --config graphql-types-codegen.yml"
     },
     "dependencies": {
+        "@apollo/client": "^3.7.1",
         "classnames": "^2.3.2",
         "next": "13.0.0",
         "react": "^18",
@@ -20,6 +22,11 @@
     "devDependencies": {
         "@commitlint/cli": "^17.1.2",
         "@commitlint/config-conventional": "^17.1.0",
+        "@graphql-codegen/cli": "2.13.8",
+        "@graphql-codegen/client-preset": "1.1.1",
+        "@graphql-codegen/typescript": "^2.8.0",
+        "@graphql-codegen/typescript-operations": "^2.5.5",
+        "@graphql-codegen/typescript-react-apollo": "^3.3.5",
         "@jest/globals": "^29.2.2",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",

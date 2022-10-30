@@ -24,7 +24,8 @@
         "paths": {
             "styles/*": ["styles/*"],
             "components/*": ["components/*"],
-            "constants/*": ["constants/*"]
+            "constants/*": ["constants/*"],
+            "providers/*": ["providers/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
