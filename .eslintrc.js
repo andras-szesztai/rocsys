@@ -24,6 +24,7 @@ module.exports = {
     rules: {
         'no-shadow': 'off',
         'no-unused-vars': 'off',
+        'react/require-default-props': 'off',
         '@next/next/no-html-link-for-pages': 'off',
         '@typescript-eslint/no-unused-vars': ['error'],
         'react/react-in-jsx-scope': 'off',
