@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 import PageHeader from 'components/atoms/PageHeader/PageHeader'
-import NavLink from 'components/atoms/NavLink/NavLink'
+import { NavLink } from 'components/atoms/NavLink'
 import 'styles/globals.css'
 
 const RootLayout = ({ children }: { children: ReactNode }) => (

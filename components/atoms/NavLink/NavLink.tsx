@@ -4,9 +4,9 @@ import classNames from 'classnames'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { TRoutesKeys, TRouteValues } from 'constants/routes'
+import { Props } from './types'
 
-const NavLink = ({ text, href }: { text: TRouteValues; href: TRoutesKeys }) => {
+const NavLink = ({ text, href }: Props) => {
     const pathname = usePathname()
     const isActive = href === pathname
     const linkClassNames = classNames(
@@ -16,7 +16,6 @@ const NavLink = ({ text, href }: { text: TRouteValues; href: TRoutesKeys }) => {
             'bg-transparent': !isActive,
         }
     )
-
     return (
         <Link href={href} className={linkClassNames}>
             {text}
