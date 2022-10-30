@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import PageHeader from './PageHeader'
 
 jest.mock('next/navigation', () => ({
-    usePathname: () => '/dashboard',
+    useSelectedLayoutSegments: () => ['dashboard', '1'],
 }))
 
 describe('PageHeader', () => {

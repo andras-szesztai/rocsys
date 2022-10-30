@@ -2,13 +2,15 @@
 
 import classNames from 'classnames'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useSelectedLayoutSegments } from 'next/navigation'
 
 import { Props } from './types'
 
 const NavLink = ({ text, href }: Props) => {
-    const pathname = usePathname()
-    const isActive = href === pathname
+    const selectedLayoutSegments = useSelectedLayoutSegments()
+    const isActive = selectedLayoutSegments.length
+        ? selectedLayoutSegments.find((layout) => `/${layout}` === href)
+        : href === '/'
     const linkClassNames = classNames(
         'text-white px-3 py-2 rounded-md text-sm font-medium',
         {

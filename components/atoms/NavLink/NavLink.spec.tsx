@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import NavLink from './NavLink'
 
 jest.mock('next/navigation', () => ({
-    usePathname: () => '/dashboard',
+    useSelectedLayoutSegments: () => ['dashboard', '1'],
 }))
 
 describe('NavLink', () => {
