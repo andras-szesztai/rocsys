@@ -1,6 +1,5 @@
 describe('Dashboard', () => {
-    it('displays correct list of devices', () => {
-        cy.visit('/dashboard')
+    beforeEach(() => {
         cy.intercept(
             'POST',
             'https://probable-egret-57.hasura.app/v1/graphql',
@@ -10,8 +9,12 @@ describe('Dashboard', () => {
                 }
             }
         ).as('graphqlRequest')
+        cy.visit('/dashboard')
+    })
+
+    it('displays correct list of devices', () => {
         cy.wait('@graphqlRequest')
-        cy.get('h3').contains('Roc One').as('tileOneTitle')
+        cy.contains('Roc One').as('tileOneTitle')
         cy.get('@tileOneTitle').should('be.visible')
         cy.get('@tileOneTitle').parent().parent().as('tileOne')
         cy.get('@tileOne')

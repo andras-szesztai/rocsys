@@ -1,10 +1,10 @@
 'use client'
 
 import { ReactNode } from 'react'
+import { useSelectedLayoutSegments } from 'next/navigation'
 
 import { Tile } from 'components/molecules/Tile'
 import { useReadAllDevicesQuery } from 'types/generated/graphql'
-import { useSelectedLayoutSegments } from 'next/navigation'
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
     const selectedLayoutSegments = useSelectedLayoutSegments()
