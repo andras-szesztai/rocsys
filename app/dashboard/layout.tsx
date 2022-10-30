@@ -4,8 +4,10 @@ import { ReactNode } from 'react'
 
 import { Tile } from 'components/molecules/Tile'
 import { useReadAllDevicesQuery } from 'types/generated/graphql'
+import { useSelectedLayoutSegments } from 'next/navigation'
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
+    const selectedLayoutSegments = useSelectedLayoutSegments()
     const { data, loading, error } = useReadAllDevicesQuery()
     return (
         <section className="flex gap-x-6 w-full">
@@ -21,8 +23,8 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
                             key={device.id}
                             title={device.name}
                             subtitle={device.device_type.name}
-                            href={`/${device.id}`}
-                            isActive
+                            href={`/dashboard/${device.id}`}
+                            isActive={selectedLayoutSegments[0] === device.id}
                         />
                     ))}
                 </ul>
