@@ -7,7 +7,7 @@ interface PageProps {
 
 export async function generateStaticParams() {
     const { device: allDevices } = await graphqlClient.request(getAllDevices)
-    return allDevices.map((device) => ({
+    return allDevices.slice(0, 5).map((device) => ({
         id: `${device.id}`,
     }))
 }
