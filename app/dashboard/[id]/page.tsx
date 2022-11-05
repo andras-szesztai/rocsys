@@ -1,14 +1,17 @@
-'use client'
+import { graphqlClient } from 'lib/graphql-client'
+import { getDevice } from 'operations/device'
 
 interface PageProps {
     params?: { id?: string }
 }
 
-const SelectedRocPage = ({ params }: PageProps) => {
-    // Here would be fetching single ROC
+const SelectedRocPage = async ({ params }: PageProps) => {
+    const { device } = await graphqlClient.request(getDevice, {
+        id: params?.id,
+    })
     return (
         <h3 className="text-black text-xl whitespace-nowrap truncate overflow-hidden">
-            More info about ROC with id {params?.id}
+            {device[0].description}
         </h3>
     )
 }

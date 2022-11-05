@@ -1,9 +1,5 @@
-'use client'
-
 import { ReactNode } from 'react'
-import { ApolloProvider } from '@apollo/client'
 
-import client from 'providers/apolloClient'
 import PageHeader from 'components/atoms/PageHeader/PageHeader'
 import { NavLink } from 'components/atoms/NavLink'
 import 'styles/globals.css'
@@ -39,9 +35,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
                 <PageHeader />
                 <main className="flex-1 relative">
                     <div className="mx-auto max-w-7xl py-6 px-8 h-96">
-                        <ApolloProvider client={client}>
-                            {children}
-                        </ApolloProvider>
+                        {children}
                     </div>
                 </main>
             </div>

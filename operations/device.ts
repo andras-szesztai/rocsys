@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client'
+import { graphql } from 'gql/gql'
 
-export const READ_ALL_DEVICES = gql`
-    query readAllDevices {
+export const getAllDevices = graphql(`
+    query ReadAllDevices {
         device {
             id
             name
@@ -10,18 +10,17 @@ export const READ_ALL_DEVICES = gql`
             }
         }
     }
-`
+`)
 
-export const READ_DEVICE = gql`
-    query readDevice($id: ID!) {
-        device(id: $id) {
+export const getDevice = graphql(`
+    query ReadDevice($id: bigint) {
+        device(where: { id: { _eq: $id } }) {
             id
-            serial_number
-            description
             name
+            description
             device_type {
                 name
             }
         }
     }
-`
+`)

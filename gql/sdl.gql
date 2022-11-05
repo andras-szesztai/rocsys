@@ -1,0 +1,9360 @@
+schema {
+  query: query_root
+  subscription: subscription_root
+}
+
+"""
+whether this query should be cached (Hasura Cloud only)
+"""
+directive @cached(
+  """
+  measured in seconds
+  """
+  ttl: Int! = 60
+
+  """
+  refresh the cache entry
+  """
+  refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """
+  does the column match the given case-insensitive pattern
+  """
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """
+  does the column match the given pattern
+  """
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """
+  does the column NOT match the given case-insensitive pattern
+  """
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """
+  does the column NOT match the given pattern
+  """
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """
+  does the column NOT match the given SQL regular expression
+  """
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """
+  does the column match the given SQL regular expression
+  """
+  _similar: String
+}
+
+scalar access_level
+
+"""
+Boolean expression to compare columns of type "access_level". All fields are combined with logical 'AND'.
+"""
+input access_level_comparison_exp {
+  _eq: access_level
+  _gt: access_level
+  _gte: access_level
+  _in: [access_level!]
+  _is_null: Boolean
+  _lt: access_level
+  _lte: access_level
+  _neq: access_level
+  _nin: [access_level!]
+}
+
+scalar bigint
+
+"""
+Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'.
+"""
+input bigint_comparison_exp {
+  _eq: bigint
+  _gt: bigint
+  _gte: bigint
+  _in: [bigint!]
+  _is_null: Boolean
+  _lt: bigint
+  _lte: bigint
+  _neq: bigint
+  _nin: [bigint!]
+}
+
+"""
+columns and relationships of "connnector_type"
+"""
+type connnector_type {
+  code: String!
+
+  """
+  An array relationship
+  """
+  device_configurations(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_configuration_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_configuration_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): [device_configuration!]!
+
+  """
+  An aggregate relationship
+  """
+  device_configurations_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_configuration_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_configuration_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): device_configuration_aggregate!
+  id: bigint!
+  name: String!
+}
+
+"""
+aggregated selection of "connnector_type"
+"""
+type connnector_type_aggregate {
+  aggregate: connnector_type_aggregate_fields
+  nodes: [connnector_type!]!
+}
+
+"""
+aggregate fields of "connnector_type"
+"""
+type connnector_type_aggregate_fields {
+  avg: connnector_type_avg_fields
+  count(columns: [connnector_type_select_column!], distinct: Boolean): Int!
+  max: connnector_type_max_fields
+  min: connnector_type_min_fields
+  stddev: connnector_type_stddev_fields
+  stddev_pop: connnector_type_stddev_pop_fields
+  stddev_samp: connnector_type_stddev_samp_fields
+  sum: connnector_type_sum_fields
+  var_pop: connnector_type_var_pop_fields
+  var_samp: connnector_type_var_samp_fields
+  variance: connnector_type_variance_fields
+}
+
+"""
+aggregate avg on columns
+"""
+type connnector_type_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "connnector_type". All fields are combined with a logical 'AND'.
+"""
+input connnector_type_bool_exp {
+  _and: [connnector_type_bool_exp!]
+  _not: connnector_type_bool_exp
+  _or: [connnector_type_bool_exp!]
+  code: String_comparison_exp
+  device_configurations: device_configuration_bool_exp
+  device_configurations_aggregate: device_configuration_aggregate_bool_exp
+  id: bigint_comparison_exp
+  name: String_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type connnector_type_max_fields {
+  code: String
+  id: bigint
+  name: String
+}
+
+"""
+aggregate min on columns
+"""
+type connnector_type_min_fields {
+  code: String
+  id: bigint
+  name: String
+}
+
+"""
+Ordering options when selecting data from "connnector_type".
+"""
+input connnector_type_order_by {
+  code: order_by
+  device_configurations_aggregate: device_configuration_aggregate_order_by
+  id: order_by
+  name: order_by
+}
+
+"""
+select columns of table "connnector_type"
+"""
+enum connnector_type_select_column {
+  """
+  column name
+  """
+  code
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+aggregate stddev on columns
+"""
+type connnector_type_stddev_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type connnector_type_stddev_pop_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type connnector_type_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "connnector_type"
+"""
+input connnector_type_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: connnector_type_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input connnector_type_stream_cursor_value_input {
+  code: String
+  id: bigint
+  name: String
+}
+
+"""
+aggregate sum on columns
+"""
+type connnector_type_sum_fields {
+  id: bigint
+}
+
+"""
+aggregate var_pop on columns
+"""
+type connnector_type_var_pop_fields {
+  id: Float
+}
+
+"""
+aggregate var_samp on columns
+"""
+type connnector_type_var_samp_fields {
+  id: Float
+}
+
+"""
+aggregate variance on columns
+"""
+type connnector_type_variance_fields {
+  id: Float
+}
+
+"""
+ordering argument of a cursor
+"""
+enum cursor_ordering {
+  """
+  ascending ordering of the cursor
+  """
+  ASC
+
+  """
+  descending ordering of the cursor
+  """
+  DESC
+}
+
+"""
+columns and relationships of "customer"
+"""
+type customer {
+  created_at: timestamptz!
+
+  """
+  An array relationship
+  """
+  customer_users(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): [customer_user!]!
+
+  """
+  An aggregate relationship
+  """
+  customer_users_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): customer_user_aggregate!
+
+  """
+  An array relationship
+  """
+  device_groups(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_bool_exp
+  ): [device_group!]!
+
+  """
+  An aggregate relationship
+  """
+  device_groups_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_bool_exp
+  ): device_group_aggregate!
+  id: bigint!
+  name: String!
+
+  """
+  An array relationship
+  """
+  sites(
+    """
+    distinct select on columns
+    """
+    distinct_on: [site_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [site_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): [site!]!
+
+  """
+  An aggregate relationship
+  """
+  sites_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [site_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [site_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): site_aggregate!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "customer"
+"""
+type customer_aggregate {
+  aggregate: customer_aggregate_fields
+  nodes: [customer!]!
+}
+
+"""
+aggregate fields of "customer"
+"""
+type customer_aggregate_fields {
+  avg: customer_avg_fields
+  count(columns: [customer_select_column!], distinct: Boolean): Int!
+  max: customer_max_fields
+  min: customer_min_fields
+  stddev: customer_stddev_fields
+  stddev_pop: customer_stddev_pop_fields
+  stddev_samp: customer_stddev_samp_fields
+  sum: customer_sum_fields
+  var_pop: customer_var_pop_fields
+  var_samp: customer_var_samp_fields
+  variance: customer_variance_fields
+}
+
+"""
+aggregate avg on columns
+"""
+type customer_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "customer". All fields are combined with a logical 'AND'.
+"""
+input customer_bool_exp {
+  _and: [customer_bool_exp!]
+  _not: customer_bool_exp
+  _or: [customer_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  customer_users: customer_user_bool_exp
+  customer_users_aggregate: customer_user_aggregate_bool_exp
+  device_groups: device_group_bool_exp
+  device_groups_aggregate: device_group_aggregate_bool_exp
+  id: bigint_comparison_exp
+  name: String_comparison_exp
+  sites: site_bool_exp
+  sites_aggregate: site_aggregate_bool_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type customer_max_fields {
+  created_at: timestamptz
+  id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate min on columns
+"""
+type customer_min_fields {
+  created_at: timestamptz
+  id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+Ordering options when selecting data from "customer".
+"""
+input customer_order_by {
+  created_at: order_by
+  customer_users_aggregate: customer_user_aggregate_order_by
+  device_groups_aggregate: device_group_aggregate_order_by
+  id: order_by
+  name: order_by
+  sites_aggregate: site_aggregate_order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "customer"
+"""
+enum customer_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+aggregate stddev on columns
+"""
+type customer_stddev_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type customer_stddev_pop_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type customer_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "customer"
+"""
+input customer_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: customer_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input customer_stream_cursor_value_input {
+  created_at: timestamptz
+  id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type customer_sum_fields {
+  id: bigint
+}
+
+"""
+columns and relationships of "customer_user"
+"""
+type customer_user {
+  access_level: access_level!
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  customer: customer!
+  customer_id: bigint!
+  updated_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  user: user!
+  user_id: bigint!
+}
+
+"""
+aggregated selection of "customer_user"
+"""
+type customer_user_aggregate {
+  aggregate: customer_user_aggregate_fields
+  nodes: [customer_user!]!
+}
+
+input customer_user_aggregate_bool_exp {
+  count: customer_user_aggregate_bool_exp_count
+}
+
+input customer_user_aggregate_bool_exp_count {
+  arguments: [customer_user_select_column!]
+  distinct: Boolean
+  filter: customer_user_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "customer_user"
+"""
+type customer_user_aggregate_fields {
+  avg: customer_user_avg_fields
+  count(columns: [customer_user_select_column!], distinct: Boolean): Int!
+  max: customer_user_max_fields
+  min: customer_user_min_fields
+  stddev: customer_user_stddev_fields
+  stddev_pop: customer_user_stddev_pop_fields
+  stddev_samp: customer_user_stddev_samp_fields
+  sum: customer_user_sum_fields
+  var_pop: customer_user_var_pop_fields
+  var_samp: customer_user_var_samp_fields
+  variance: customer_user_variance_fields
+}
+
+"""
+order by aggregate values of table "customer_user"
+"""
+input customer_user_aggregate_order_by {
+  avg: customer_user_avg_order_by
+  count: order_by
+  max: customer_user_max_order_by
+  min: customer_user_min_order_by
+  stddev: customer_user_stddev_order_by
+  stddev_pop: customer_user_stddev_pop_order_by
+  stddev_samp: customer_user_stddev_samp_order_by
+  sum: customer_user_sum_order_by
+  var_pop: customer_user_var_pop_order_by
+  var_samp: customer_user_var_samp_order_by
+  variance: customer_user_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type customer_user_avg_fields {
+  customer_id: Float
+  user_id: Float
+}
+
+"""
+order by avg() on columns of table "customer_user"
+"""
+input customer_user_avg_order_by {
+  customer_id: order_by
+  user_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "customer_user". All fields are combined with a logical 'AND'.
+"""
+input customer_user_bool_exp {
+  _and: [customer_user_bool_exp!]
+  _not: customer_user_bool_exp
+  _or: [customer_user_bool_exp!]
+  access_level: access_level_comparison_exp
+  created_at: timestamptz_comparison_exp
+  customer: customer_bool_exp
+  customer_id: bigint_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: user_bool_exp
+  user_id: bigint_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type customer_user_max_fields {
+  access_level: access_level
+  created_at: timestamptz
+  customer_id: bigint
+  updated_at: timestamptz
+  user_id: bigint
+}
+
+"""
+order by max() on columns of table "customer_user"
+"""
+input customer_user_max_order_by {
+  access_level: order_by
+  created_at: order_by
+  customer_id: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type customer_user_min_fields {
+  access_level: access_level
+  created_at: timestamptz
+  customer_id: bigint
+  updated_at: timestamptz
+  user_id: bigint
+}
+
+"""
+order by min() on columns of table "customer_user"
+"""
+input customer_user_min_order_by {
+  access_level: order_by
+  created_at: order_by
+  customer_id: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+Ordering options when selecting data from "customer_user".
+"""
+input customer_user_order_by {
+  access_level: order_by
+  created_at: order_by
+  customer: customer_order_by
+  customer_id: order_by
+  updated_at: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "customer_user"
+"""
+enum customer_user_select_column {
+  """
+  column name
+  """
+  access_level
+
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  customer_id
+
+  """
+  column name
+  """
+  updated_at
+
+  """
+  column name
+  """
+  user_id
+}
+
+"""
+aggregate stddev on columns
+"""
+type customer_user_stddev_fields {
+  customer_id: Float
+  user_id: Float
+}
+
+"""
+order by stddev() on columns of table "customer_user"
+"""
+input customer_user_stddev_order_by {
+  customer_id: order_by
+  user_id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type customer_user_stddev_pop_fields {
+  customer_id: Float
+  user_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "customer_user"
+"""
+input customer_user_stddev_pop_order_by {
+  customer_id: order_by
+  user_id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type customer_user_stddev_samp_fields {
+  customer_id: Float
+  user_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "customer_user"
+"""
+input customer_user_stddev_samp_order_by {
+  customer_id: order_by
+  user_id: order_by
+}
+
+"""
+Streaming cursor of the table "customer_user"
+"""
+input customer_user_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: customer_user_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input customer_user_stream_cursor_value_input {
+  access_level: access_level
+  created_at: timestamptz
+  customer_id: bigint
+  updated_at: timestamptz
+  user_id: bigint
+}
+
+"""
+aggregate sum on columns
+"""
+type customer_user_sum_fields {
+  customer_id: bigint
+  user_id: bigint
+}
+
+"""
+order by sum() on columns of table "customer_user"
+"""
+input customer_user_sum_order_by {
+  customer_id: order_by
+  user_id: order_by
+}
+
+"""
+aggregate var_pop on columns
+"""
+type customer_user_var_pop_fields {
+  customer_id: Float
+  user_id: Float
+}
+
+"""
+order by var_pop() on columns of table "customer_user"
+"""
+input customer_user_var_pop_order_by {
+  customer_id: order_by
+  user_id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type customer_user_var_samp_fields {
+  customer_id: Float
+  user_id: Float
+}
+
+"""
+order by var_samp() on columns of table "customer_user"
+"""
+input customer_user_var_samp_order_by {
+  customer_id: order_by
+  user_id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type customer_user_variance_fields {
+  customer_id: Float
+  user_id: Float
+}
+
+"""
+order by variance() on columns of table "customer_user"
+"""
+input customer_user_variance_order_by {
+  customer_id: order_by
+  user_id: order_by
+}
+
+"""
+aggregate var_pop on columns
+"""
+type customer_var_pop_fields {
+  id: Float
+}
+
+"""
+aggregate var_samp on columns
+"""
+type customer_var_samp_fields {
+  id: Float
+}
+
+"""
+aggregate variance on columns
+"""
+type customer_variance_fields {
+  id: Float
+}
+
+"""
+columns and relationships of "device"
+"""
+type device {
+  created_at: timestamptz!
+  description: String
+
+  """
+  An array relationship
+  """
+  device_configurations(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_configuration_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_configuration_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): [device_configuration!]!
+
+  """
+  An aggregate relationship
+  """
+  device_configurations_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_configuration_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_configuration_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): device_configuration_aggregate!
+
+  """
+  An array relationship
+  """
+  device_group_devices(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): [device_group_device!]!
+
+  """
+  An aggregate relationship
+  """
+  device_group_devices_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): device_group_device_aggregate!
+
+  """
+  An array relationship
+  """
+  device_measurement_values(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_value_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_value_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): [device_measurement_value!]!
+
+  """
+  An aggregate relationship
+  """
+  device_measurement_values_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_value_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_value_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): device_measurement_value_aggregate!
+
+  """
+  An array relationship
+  """
+  device_operations(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): [device_operation!]!
+
+  """
+  An aggregate relationship
+  """
+  device_operations_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): device_operation_aggregate!
+
+  """
+  An array relationship
+  """
+  device_states(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_state_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_state_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_state_bool_exp
+  ): [device_state!]!
+
+  """
+  An aggregate relationship
+  """
+  device_states_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_state_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_state_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_state_bool_exp
+  ): device_state_aggregate!
+
+  """
+  An object relationship
+  """
+  device_type: device_type!
+  device_type_id: bigint!
+  id: bigint!
+
+  """
+  An object relationship
+  """
+  location: location
+  location_id: bigint
+  name: String!
+  remarks: String
+  serial_number: String
+
+  """
+  An object relationship
+  """
+  site: site!
+  site_id: bigint!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "device"
+"""
+type device_aggregate {
+  aggregate: device_aggregate_fields
+  nodes: [device!]!
+}
+
+input device_aggregate_bool_exp {
+  count: device_aggregate_bool_exp_count
+}
+
+input device_aggregate_bool_exp_count {
+  arguments: [device_select_column!]
+  distinct: Boolean
+  filter: device_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "device"
+"""
+type device_aggregate_fields {
+  avg: device_avg_fields
+  count(columns: [device_select_column!], distinct: Boolean): Int!
+  max: device_max_fields
+  min: device_min_fields
+  stddev: device_stddev_fields
+  stddev_pop: device_stddev_pop_fields
+  stddev_samp: device_stddev_samp_fields
+  sum: device_sum_fields
+  var_pop: device_var_pop_fields
+  var_samp: device_var_samp_fields
+  variance: device_variance_fields
+}
+
+"""
+order by aggregate values of table "device"
+"""
+input device_aggregate_order_by {
+  avg: device_avg_order_by
+  count: order_by
+  max: device_max_order_by
+  min: device_min_order_by
+  stddev: device_stddev_order_by
+  stddev_pop: device_stddev_pop_order_by
+  stddev_samp: device_stddev_samp_order_by
+  sum: device_sum_order_by
+  var_pop: device_var_pop_order_by
+  var_samp: device_var_samp_order_by
+  variance: device_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type device_avg_fields {
+  device_type_id: Float
+  id: Float
+  location_id: Float
+  site_id: Float
+}
+
+"""
+order by avg() on columns of table "device"
+"""
+input device_avg_order_by {
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  site_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "device". All fields are combined with a logical 'AND'.
+"""
+input device_bool_exp {
+  _and: [device_bool_exp!]
+  _not: device_bool_exp
+  _or: [device_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  description: String_comparison_exp
+  device_configurations: device_configuration_bool_exp
+  device_configurations_aggregate: device_configuration_aggregate_bool_exp
+  device_group_devices: device_group_device_bool_exp
+  device_group_devices_aggregate: device_group_device_aggregate_bool_exp
+  device_measurement_values: device_measurement_value_bool_exp
+  device_measurement_values_aggregate: device_measurement_value_aggregate_bool_exp
+  device_operations: device_operation_bool_exp
+  device_operations_aggregate: device_operation_aggregate_bool_exp
+  device_states: device_state_bool_exp
+  device_states_aggregate: device_state_aggregate_bool_exp
+  device_type: device_type_bool_exp
+  device_type_id: bigint_comparison_exp
+  id: bigint_comparison_exp
+  location: location_bool_exp
+  location_id: bigint_comparison_exp
+  name: String_comparison_exp
+  remarks: String_comparison_exp
+  serial_number: String_comparison_exp
+  site: site_bool_exp
+  site_id: bigint_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+columns and relationships of "device_configuration"
+"""
+type device_configuration {
+  additional_configuration(
+    """
+    JSON select path
+    """
+    path: String
+  ): jsonb
+  awp_model: String
+  camera_firmware_version: String
+  camera_model: String
+  connector_configuration: String!
+  connector_type_id: bigint!
+
+  """
+  An object relationship
+  """
+  connnector_type: connnector_type!
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  device: device!
+  device_id: bigint!
+  id: bigint!
+  is_active: Boolean!
+  led_ring_model: String
+  motor_controller_model: String
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "device_configuration"
+"""
+type device_configuration_aggregate {
+  aggregate: device_configuration_aggregate_fields
+  nodes: [device_configuration!]!
+}
+
+input device_configuration_aggregate_bool_exp {
+  bool_and: device_configuration_aggregate_bool_exp_bool_and
+  bool_or: device_configuration_aggregate_bool_exp_bool_or
+  count: device_configuration_aggregate_bool_exp_count
+}
+
+input device_configuration_aggregate_bool_exp_bool_and {
+  arguments: device_configuration_select_column_device_configuration_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: device_configuration_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input device_configuration_aggregate_bool_exp_bool_or {
+  arguments: device_configuration_select_column_device_configuration_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: device_configuration_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input device_configuration_aggregate_bool_exp_count {
+  arguments: [device_configuration_select_column!]
+  distinct: Boolean
+  filter: device_configuration_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "device_configuration"
+"""
+type device_configuration_aggregate_fields {
+  avg: device_configuration_avg_fields
+  count(columns: [device_configuration_select_column!], distinct: Boolean): Int!
+  max: device_configuration_max_fields
+  min: device_configuration_min_fields
+  stddev: device_configuration_stddev_fields
+  stddev_pop: device_configuration_stddev_pop_fields
+  stddev_samp: device_configuration_stddev_samp_fields
+  sum: device_configuration_sum_fields
+  var_pop: device_configuration_var_pop_fields
+  var_samp: device_configuration_var_samp_fields
+  variance: device_configuration_variance_fields
+}
+
+"""
+order by aggregate values of table "device_configuration"
+"""
+input device_configuration_aggregate_order_by {
+  avg: device_configuration_avg_order_by
+  count: order_by
+  max: device_configuration_max_order_by
+  min: device_configuration_min_order_by
+  stddev: device_configuration_stddev_order_by
+  stddev_pop: device_configuration_stddev_pop_order_by
+  stddev_samp: device_configuration_stddev_samp_order_by
+  sum: device_configuration_sum_order_by
+  var_pop: device_configuration_var_pop_order_by
+  var_samp: device_configuration_var_samp_order_by
+  variance: device_configuration_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type device_configuration_avg_fields {
+  connector_type_id: Float
+  device_id: Float
+  id: Float
+}
+
+"""
+order by avg() on columns of table "device_configuration"
+"""
+input device_configuration_avg_order_by {
+  connector_type_id: order_by
+  device_id: order_by
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "device_configuration". All fields are combined with a logical 'AND'.
+"""
+input device_configuration_bool_exp {
+  _and: [device_configuration_bool_exp!]
+  _not: device_configuration_bool_exp
+  _or: [device_configuration_bool_exp!]
+  additional_configuration: jsonb_comparison_exp
+  awp_model: String_comparison_exp
+  camera_firmware_version: String_comparison_exp
+  camera_model: String_comparison_exp
+  connector_configuration: String_comparison_exp
+  connector_type_id: bigint_comparison_exp
+  connnector_type: connnector_type_bool_exp
+  created_at: timestamptz_comparison_exp
+  device: device_bool_exp
+  device_id: bigint_comparison_exp
+  id: bigint_comparison_exp
+  is_active: Boolean_comparison_exp
+  led_ring_model: String_comparison_exp
+  motor_controller_model: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type device_configuration_max_fields {
+  awp_model: String
+  camera_firmware_version: String
+  camera_model: String
+  connector_configuration: String
+  connector_type_id: bigint
+  created_at: timestamptz
+  device_id: bigint
+  id: bigint
+  led_ring_model: String
+  motor_controller_model: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "device_configuration"
+"""
+input device_configuration_max_order_by {
+  awp_model: order_by
+  camera_firmware_version: order_by
+  camera_model: order_by
+  connector_configuration: order_by
+  connector_type_id: order_by
+  created_at: order_by
+  device_id: order_by
+  id: order_by
+  led_ring_model: order_by
+  motor_controller_model: order_by
+  updated_at: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type device_configuration_min_fields {
+  awp_model: String
+  camera_firmware_version: String
+  camera_model: String
+  connector_configuration: String
+  connector_type_id: bigint
+  created_at: timestamptz
+  device_id: bigint
+  id: bigint
+  led_ring_model: String
+  motor_controller_model: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "device_configuration"
+"""
+input device_configuration_min_order_by {
+  awp_model: order_by
+  camera_firmware_version: order_by
+  camera_model: order_by
+  connector_configuration: order_by
+  connector_type_id: order_by
+  created_at: order_by
+  device_id: order_by
+  id: order_by
+  led_ring_model: order_by
+  motor_controller_model: order_by
+  updated_at: order_by
+}
+
+"""
+Ordering options when selecting data from "device_configuration".
+"""
+input device_configuration_order_by {
+  additional_configuration: order_by
+  awp_model: order_by
+  camera_firmware_version: order_by
+  camera_model: order_by
+  connector_configuration: order_by
+  connector_type_id: order_by
+  connnector_type: connnector_type_order_by
+  created_at: order_by
+  device: device_order_by
+  device_id: order_by
+  id: order_by
+  is_active: order_by
+  led_ring_model: order_by
+  motor_controller_model: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "device_configuration"
+"""
+enum device_configuration_select_column {
+  """
+  column name
+  """
+  additional_configuration
+
+  """
+  column name
+  """
+  awp_model
+
+  """
+  column name
+  """
+  camera_firmware_version
+
+  """
+  column name
+  """
+  camera_model
+
+  """
+  column name
+  """
+  connector_configuration
+
+  """
+  column name
+  """
+  connector_type_id
+
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  device_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  is_active
+
+  """
+  column name
+  """
+  led_ring_model
+
+  """
+  column name
+  """
+  motor_controller_model
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+select "device_configuration_aggregate_bool_exp_bool_and_arguments_columns" columns of table "device_configuration"
+"""
+enum device_configuration_select_column_device_configuration_aggregate_bool_exp_bool_and_arguments_columns {
+  """
+  column name
+  """
+  is_active
+}
+
+"""
+select "device_configuration_aggregate_bool_exp_bool_or_arguments_columns" columns of table "device_configuration"
+"""
+enum device_configuration_select_column_device_configuration_aggregate_bool_exp_bool_or_arguments_columns {
+  """
+  column name
+  """
+  is_active
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_configuration_stddev_fields {
+  connector_type_id: Float
+  device_id: Float
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "device_configuration"
+"""
+input device_configuration_stddev_order_by {
+  connector_type_id: order_by
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_configuration_stddev_pop_fields {
+  connector_type_id: Float
+  device_id: Float
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "device_configuration"
+"""
+input device_configuration_stddev_pop_order_by {
+  connector_type_id: order_by
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_configuration_stddev_samp_fields {
+  connector_type_id: Float
+  device_id: Float
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "device_configuration"
+"""
+input device_configuration_stddev_samp_order_by {
+  connector_type_id: order_by
+  device_id: order_by
+  id: order_by
+}
+
+"""
+Streaming cursor of the table "device_configuration"
+"""
+input device_configuration_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_configuration_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_configuration_stream_cursor_value_input {
+  additional_configuration: jsonb
+  awp_model: String
+  camera_firmware_version: String
+  camera_model: String
+  connector_configuration: String
+  connector_type_id: bigint
+  created_at: timestamptz
+  device_id: bigint
+  id: bigint
+  is_active: Boolean
+  led_ring_model: String
+  motor_controller_model: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type device_configuration_sum_fields {
+  connector_type_id: bigint
+  device_id: bigint
+  id: bigint
+}
+
+"""
+order by sum() on columns of table "device_configuration"
+"""
+input device_configuration_sum_order_by {
+  connector_type_id: order_by
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_configuration_var_pop_fields {
+  connector_type_id: Float
+  device_id: Float
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "device_configuration"
+"""
+input device_configuration_var_pop_order_by {
+  connector_type_id: order_by
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_configuration_var_samp_fields {
+  connector_type_id: Float
+  device_id: Float
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "device_configuration"
+"""
+input device_configuration_var_samp_order_by {
+  connector_type_id: order_by
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type device_configuration_variance_fields {
+  connector_type_id: Float
+  device_id: Float
+  id: Float
+}
+
+"""
+order by variance() on columns of table "device_configuration"
+"""
+input device_configuration_variance_order_by {
+  connector_type_id: order_by
+  device_id: order_by
+  id: order_by
+}
+
+"""
+columns and relationships of "device_group"
+"""
+type device_group {
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  customer: customer!
+  customer_id: bigint!
+  description: String
+
+  """
+  An array relationship
+  """
+  device_group_devices(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): [device_group_device!]!
+
+  """
+  An aggregate relationship
+  """
+  device_group_devices_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): device_group_device_aggregate!
+  id: bigint!
+  name: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "device_group"
+"""
+type device_group_aggregate {
+  aggregate: device_group_aggregate_fields
+  nodes: [device_group!]!
+}
+
+input device_group_aggregate_bool_exp {
+  count: device_group_aggregate_bool_exp_count
+}
+
+input device_group_aggregate_bool_exp_count {
+  arguments: [device_group_select_column!]
+  distinct: Boolean
+  filter: device_group_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "device_group"
+"""
+type device_group_aggregate_fields {
+  avg: device_group_avg_fields
+  count(columns: [device_group_select_column!], distinct: Boolean): Int!
+  max: device_group_max_fields
+  min: device_group_min_fields
+  stddev: device_group_stddev_fields
+  stddev_pop: device_group_stddev_pop_fields
+  stddev_samp: device_group_stddev_samp_fields
+  sum: device_group_sum_fields
+  var_pop: device_group_var_pop_fields
+  var_samp: device_group_var_samp_fields
+  variance: device_group_variance_fields
+}
+
+"""
+order by aggregate values of table "device_group"
+"""
+input device_group_aggregate_order_by {
+  avg: device_group_avg_order_by
+  count: order_by
+  max: device_group_max_order_by
+  min: device_group_min_order_by
+  stddev: device_group_stddev_order_by
+  stddev_pop: device_group_stddev_pop_order_by
+  stddev_samp: device_group_stddev_samp_order_by
+  sum: device_group_sum_order_by
+  var_pop: device_group_var_pop_order_by
+  var_samp: device_group_var_samp_order_by
+  variance: device_group_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type device_group_avg_fields {
+  customer_id: Float
+  id: Float
+}
+
+"""
+order by avg() on columns of table "device_group"
+"""
+input device_group_avg_order_by {
+  customer_id: order_by
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "device_group". All fields are combined with a logical 'AND'.
+"""
+input device_group_bool_exp {
+  _and: [device_group_bool_exp!]
+  _not: device_group_bool_exp
+  _or: [device_group_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  customer: customer_bool_exp
+  customer_id: bigint_comparison_exp
+  description: String_comparison_exp
+  device_group_devices: device_group_device_bool_exp
+  device_group_devices_aggregate: device_group_device_aggregate_bool_exp
+  id: bigint_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+columns and relationships of "device_group_device"
+"""
+type device_group_device {
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  device: device!
+
+  """
+  An object relationship
+  """
+  device_group: device_group!
+  device_group_id: bigint!
+  device_id: bigint!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "device_group_device"
+"""
+type device_group_device_aggregate {
+  aggregate: device_group_device_aggregate_fields
+  nodes: [device_group_device!]!
+}
+
+input device_group_device_aggregate_bool_exp {
+  count: device_group_device_aggregate_bool_exp_count
+}
+
+input device_group_device_aggregate_bool_exp_count {
+  arguments: [device_group_device_select_column!]
+  distinct: Boolean
+  filter: device_group_device_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "device_group_device"
+"""
+type device_group_device_aggregate_fields {
+  avg: device_group_device_avg_fields
+  count(columns: [device_group_device_select_column!], distinct: Boolean): Int!
+  max: device_group_device_max_fields
+  min: device_group_device_min_fields
+  stddev: device_group_device_stddev_fields
+  stddev_pop: device_group_device_stddev_pop_fields
+  stddev_samp: device_group_device_stddev_samp_fields
+  sum: device_group_device_sum_fields
+  var_pop: device_group_device_var_pop_fields
+  var_samp: device_group_device_var_samp_fields
+  variance: device_group_device_variance_fields
+}
+
+"""
+order by aggregate values of table "device_group_device"
+"""
+input device_group_device_aggregate_order_by {
+  avg: device_group_device_avg_order_by
+  count: order_by
+  max: device_group_device_max_order_by
+  min: device_group_device_min_order_by
+  stddev: device_group_device_stddev_order_by
+  stddev_pop: device_group_device_stddev_pop_order_by
+  stddev_samp: device_group_device_stddev_samp_order_by
+  sum: device_group_device_sum_order_by
+  var_pop: device_group_device_var_pop_order_by
+  var_samp: device_group_device_var_samp_order_by
+  variance: device_group_device_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type device_group_device_avg_fields {
+  device_group_id: Float
+  device_id: Float
+}
+
+"""
+order by avg() on columns of table "device_group_device"
+"""
+input device_group_device_avg_order_by {
+  device_group_id: order_by
+  device_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "device_group_device". All fields are combined with a logical 'AND'.
+"""
+input device_group_device_bool_exp {
+  _and: [device_group_device_bool_exp!]
+  _not: device_group_device_bool_exp
+  _or: [device_group_device_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  device: device_bool_exp
+  device_group: device_group_bool_exp
+  device_group_id: bigint_comparison_exp
+  device_id: bigint_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type device_group_device_max_fields {
+  created_at: timestamptz
+  device_group_id: bigint
+  device_id: bigint
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "device_group_device"
+"""
+input device_group_device_max_order_by {
+  created_at: order_by
+  device_group_id: order_by
+  device_id: order_by
+  updated_at: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type device_group_device_min_fields {
+  created_at: timestamptz
+  device_group_id: bigint
+  device_id: bigint
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "device_group_device"
+"""
+input device_group_device_min_order_by {
+  created_at: order_by
+  device_group_id: order_by
+  device_id: order_by
+  updated_at: order_by
+}
+
+"""
+Ordering options when selecting data from "device_group_device".
+"""
+input device_group_device_order_by {
+  created_at: order_by
+  device: device_order_by
+  device_group: device_group_order_by
+  device_group_id: order_by
+  device_id: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "device_group_device"
+"""
+enum device_group_device_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  device_group_id
+
+  """
+  column name
+  """
+  device_id
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_group_device_stddev_fields {
+  device_group_id: Float
+  device_id: Float
+}
+
+"""
+order by stddev() on columns of table "device_group_device"
+"""
+input device_group_device_stddev_order_by {
+  device_group_id: order_by
+  device_id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_group_device_stddev_pop_fields {
+  device_group_id: Float
+  device_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "device_group_device"
+"""
+input device_group_device_stddev_pop_order_by {
+  device_group_id: order_by
+  device_id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_group_device_stddev_samp_fields {
+  device_group_id: Float
+  device_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "device_group_device"
+"""
+input device_group_device_stddev_samp_order_by {
+  device_group_id: order_by
+  device_id: order_by
+}
+
+"""
+Streaming cursor of the table "device_group_device"
+"""
+input device_group_device_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_group_device_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_group_device_stream_cursor_value_input {
+  created_at: timestamptz
+  device_group_id: bigint
+  device_id: bigint
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type device_group_device_sum_fields {
+  device_group_id: bigint
+  device_id: bigint
+}
+
+"""
+order by sum() on columns of table "device_group_device"
+"""
+input device_group_device_sum_order_by {
+  device_group_id: order_by
+  device_id: order_by
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_group_device_var_pop_fields {
+  device_group_id: Float
+  device_id: Float
+}
+
+"""
+order by var_pop() on columns of table "device_group_device"
+"""
+input device_group_device_var_pop_order_by {
+  device_group_id: order_by
+  device_id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_group_device_var_samp_fields {
+  device_group_id: Float
+  device_id: Float
+}
+
+"""
+order by var_samp() on columns of table "device_group_device"
+"""
+input device_group_device_var_samp_order_by {
+  device_group_id: order_by
+  device_id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type device_group_device_variance_fields {
+  device_group_id: Float
+  device_id: Float
+}
+
+"""
+order by variance() on columns of table "device_group_device"
+"""
+input device_group_device_variance_order_by {
+  device_group_id: order_by
+  device_id: order_by
+}
+
+"""
+aggregate max on columns
+"""
+type device_group_max_fields {
+  created_at: timestamptz
+  customer_id: bigint
+  description: String
+  id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "device_group"
+"""
+input device_group_max_order_by {
+  created_at: order_by
+  customer_id: order_by
+  description: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type device_group_min_fields {
+  created_at: timestamptz
+  customer_id: bigint
+  description: String
+  id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "device_group"
+"""
+input device_group_min_order_by {
+  created_at: order_by
+  customer_id: order_by
+  description: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+Ordering options when selecting data from "device_group".
+"""
+input device_group_order_by {
+  created_at: order_by
+  customer: customer_order_by
+  customer_id: order_by
+  description: order_by
+  device_group_devices_aggregate: device_group_device_aggregate_order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "device_group"
+"""
+enum device_group_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  customer_id
+
+  """
+  column name
+  """
+  description
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_group_stddev_fields {
+  customer_id: Float
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "device_group"
+"""
+input device_group_stddev_order_by {
+  customer_id: order_by
+  id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_group_stddev_pop_fields {
+  customer_id: Float
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "device_group"
+"""
+input device_group_stddev_pop_order_by {
+  customer_id: order_by
+  id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_group_stddev_samp_fields {
+  customer_id: Float
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "device_group"
+"""
+input device_group_stddev_samp_order_by {
+  customer_id: order_by
+  id: order_by
+}
+
+"""
+Streaming cursor of the table "device_group"
+"""
+input device_group_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_group_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_group_stream_cursor_value_input {
+  created_at: timestamptz
+  customer_id: bigint
+  description: String
+  id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type device_group_sum_fields {
+  customer_id: bigint
+  id: bigint
+}
+
+"""
+order by sum() on columns of table "device_group"
+"""
+input device_group_sum_order_by {
+  customer_id: order_by
+  id: order_by
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_group_var_pop_fields {
+  customer_id: Float
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "device_group"
+"""
+input device_group_var_pop_order_by {
+  customer_id: order_by
+  id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_group_var_samp_fields {
+  customer_id: Float
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "device_group"
+"""
+input device_group_var_samp_order_by {
+  customer_id: order_by
+  id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type device_group_variance_fields {
+  customer_id: Float
+  id: Float
+}
+
+"""
+order by variance() on columns of table "device_group"
+"""
+input device_group_variance_order_by {
+  customer_id: order_by
+  id: order_by
+}
+
+"""
+aggregate max on columns
+"""
+type device_max_fields {
+  created_at: timestamptz
+  description: String
+  device_type_id: bigint
+  id: bigint
+  location_id: bigint
+  name: String
+  remarks: String
+  serial_number: String
+  site_id: bigint
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "device"
+"""
+input device_max_order_by {
+  created_at: order_by
+  description: order_by
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  name: order_by
+  remarks: order_by
+  serial_number: order_by
+  site_id: order_by
+  updated_at: order_by
+}
+
+"""
+columns and relationships of "device_measurement_property"
+"""
+type device_measurement_property {
+  """
+  An array relationship
+  """
+  device_measurement_values(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_value_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_value_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): [device_measurement_value!]!
+
+  """
+  An aggregate relationship
+  """
+  device_measurement_values_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_value_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_value_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): device_measurement_value_aggregate!
+  id: bigint!
+  name: String!
+  unit: measurement_property_unit!
+}
+
+"""
+aggregated selection of "device_measurement_property"
+"""
+type device_measurement_property_aggregate {
+  aggregate: device_measurement_property_aggregate_fields
+  nodes: [device_measurement_property!]!
+}
+
+"""
+aggregate fields of "device_measurement_property"
+"""
+type device_measurement_property_aggregate_fields {
+  avg: device_measurement_property_avg_fields
+  count(
+    columns: [device_measurement_property_select_column!]
+    distinct: Boolean
+  ): Int!
+  max: device_measurement_property_max_fields
+  min: device_measurement_property_min_fields
+  stddev: device_measurement_property_stddev_fields
+  stddev_pop: device_measurement_property_stddev_pop_fields
+  stddev_samp: device_measurement_property_stddev_samp_fields
+  sum: device_measurement_property_sum_fields
+  var_pop: device_measurement_property_var_pop_fields
+  var_samp: device_measurement_property_var_samp_fields
+  variance: device_measurement_property_variance_fields
+}
+
+"""
+aggregate avg on columns
+"""
+type device_measurement_property_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "device_measurement_property". All fields are combined with a logical 'AND'.
+"""
+input device_measurement_property_bool_exp {
+  _and: [device_measurement_property_bool_exp!]
+  _not: device_measurement_property_bool_exp
+  _or: [device_measurement_property_bool_exp!]
+  device_measurement_values: device_measurement_value_bool_exp
+  device_measurement_values_aggregate: device_measurement_value_aggregate_bool_exp
+  id: bigint_comparison_exp
+  name: String_comparison_exp
+  unit: measurement_property_unit_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type device_measurement_property_max_fields {
+  id: bigint
+  name: String
+  unit: measurement_property_unit
+}
+
+"""
+aggregate min on columns
+"""
+type device_measurement_property_min_fields {
+  id: bigint
+  name: String
+  unit: measurement_property_unit
+}
+
+"""
+Ordering options when selecting data from "device_measurement_property".
+"""
+input device_measurement_property_order_by {
+  device_measurement_values_aggregate: device_measurement_value_aggregate_order_by
+  id: order_by
+  name: order_by
+  unit: order_by
+}
+
+"""
+select columns of table "device_measurement_property"
+"""
+enum device_measurement_property_select_column {
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  unit
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_measurement_property_stddev_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_measurement_property_stddev_pop_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_measurement_property_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "device_measurement_property"
+"""
+input device_measurement_property_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_measurement_property_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_measurement_property_stream_cursor_value_input {
+  id: bigint
+  name: String
+  unit: measurement_property_unit
+}
+
+"""
+aggregate sum on columns
+"""
+type device_measurement_property_sum_fields {
+  id: bigint
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_measurement_property_var_pop_fields {
+  id: Float
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_measurement_property_var_samp_fields {
+  id: Float
+}
+
+"""
+aggregate variance on columns
+"""
+type device_measurement_property_variance_fields {
+  id: Float
+}
+
+"""
+columns and relationships of "device_measurement_value"
+"""
+type device_measurement_value {
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  device: device!
+  device_id: bigint!
+
+  """
+  An object relationship
+  """
+  device_measurement_property: device_measurement_property!
+  device_measurement_property_id: bigint!
+  id: bigint!
+  recorded_at: timestamptz!
+  updated_at: timestamptz!
+  value: bigint!
+}
+
+"""
+aggregated selection of "device_measurement_value"
+"""
+type device_measurement_value_aggregate {
+  aggregate: device_measurement_value_aggregate_fields
+  nodes: [device_measurement_value!]!
+}
+
+input device_measurement_value_aggregate_bool_exp {
+  count: device_measurement_value_aggregate_bool_exp_count
+}
+
+input device_measurement_value_aggregate_bool_exp_count {
+  arguments: [device_measurement_value_select_column!]
+  distinct: Boolean
+  filter: device_measurement_value_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "device_measurement_value"
+"""
+type device_measurement_value_aggregate_fields {
+  avg: device_measurement_value_avg_fields
+  count(
+    columns: [device_measurement_value_select_column!]
+    distinct: Boolean
+  ): Int!
+  max: device_measurement_value_max_fields
+  min: device_measurement_value_min_fields
+  stddev: device_measurement_value_stddev_fields
+  stddev_pop: device_measurement_value_stddev_pop_fields
+  stddev_samp: device_measurement_value_stddev_samp_fields
+  sum: device_measurement_value_sum_fields
+  var_pop: device_measurement_value_var_pop_fields
+  var_samp: device_measurement_value_var_samp_fields
+  variance: device_measurement_value_variance_fields
+}
+
+"""
+order by aggregate values of table "device_measurement_value"
+"""
+input device_measurement_value_aggregate_order_by {
+  avg: device_measurement_value_avg_order_by
+  count: order_by
+  max: device_measurement_value_max_order_by
+  min: device_measurement_value_min_order_by
+  stddev: device_measurement_value_stddev_order_by
+  stddev_pop: device_measurement_value_stddev_pop_order_by
+  stddev_samp: device_measurement_value_stddev_samp_order_by
+  sum: device_measurement_value_sum_order_by
+  var_pop: device_measurement_value_var_pop_order_by
+  var_samp: device_measurement_value_var_samp_order_by
+  variance: device_measurement_value_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type device_measurement_value_avg_fields {
+  device_id: Float
+  device_measurement_property_id: Float
+  id: Float
+  value: Float
+}
+
+"""
+order by avg() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_avg_order_by {
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  value: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "device_measurement_value". All fields are combined with a logical 'AND'.
+"""
+input device_measurement_value_bool_exp {
+  _and: [device_measurement_value_bool_exp!]
+  _not: device_measurement_value_bool_exp
+  _or: [device_measurement_value_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  device: device_bool_exp
+  device_id: bigint_comparison_exp
+  device_measurement_property: device_measurement_property_bool_exp
+  device_measurement_property_id: bigint_comparison_exp
+  id: bigint_comparison_exp
+  recorded_at: timestamptz_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  value: bigint_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type device_measurement_value_max_fields {
+  created_at: timestamptz
+  device_id: bigint
+  device_measurement_property_id: bigint
+  id: bigint
+  recorded_at: timestamptz
+  updated_at: timestamptz
+  value: bigint
+}
+
+"""
+order by max() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_max_order_by {
+  created_at: order_by
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  recorded_at: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type device_measurement_value_min_fields {
+  created_at: timestamptz
+  device_id: bigint
+  device_measurement_property_id: bigint
+  id: bigint
+  recorded_at: timestamptz
+  updated_at: timestamptz
+  value: bigint
+}
+
+"""
+order by min() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_min_order_by {
+  created_at: order_by
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  recorded_at: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""
+Ordering options when selecting data from "device_measurement_value".
+"""
+input device_measurement_value_order_by {
+  created_at: order_by
+  device: device_order_by
+  device_id: order_by
+  device_measurement_property: device_measurement_property_order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  recorded_at: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""
+select columns of table "device_measurement_value"
+"""
+enum device_measurement_value_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  device_id
+
+  """
+  column name
+  """
+  device_measurement_property_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  recorded_at
+
+  """
+  column name
+  """
+  updated_at
+
+  """
+  column name
+  """
+  value
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_measurement_value_stddev_fields {
+  device_id: Float
+  device_measurement_property_id: Float
+  id: Float
+  value: Float
+}
+
+"""
+order by stddev() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_stddev_order_by {
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  value: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_measurement_value_stddev_pop_fields {
+  device_id: Float
+  device_measurement_property_id: Float
+  id: Float
+  value: Float
+}
+
+"""
+order by stddev_pop() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_stddev_pop_order_by {
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  value: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_measurement_value_stddev_samp_fields {
+  device_id: Float
+  device_measurement_property_id: Float
+  id: Float
+  value: Float
+}
+
+"""
+order by stddev_samp() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_stddev_samp_order_by {
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  value: order_by
+}
+
+"""
+Streaming cursor of the table "device_measurement_value"
+"""
+input device_measurement_value_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_measurement_value_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_measurement_value_stream_cursor_value_input {
+  created_at: timestamptz
+  device_id: bigint
+  device_measurement_property_id: bigint
+  id: bigint
+  recorded_at: timestamptz
+  updated_at: timestamptz
+  value: bigint
+}
+
+"""
+aggregate sum on columns
+"""
+type device_measurement_value_sum_fields {
+  device_id: bigint
+  device_measurement_property_id: bigint
+  id: bigint
+  value: bigint
+}
+
+"""
+order by sum() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_sum_order_by {
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  value: order_by
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_measurement_value_var_pop_fields {
+  device_id: Float
+  device_measurement_property_id: Float
+  id: Float
+  value: Float
+}
+
+"""
+order by var_pop() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_var_pop_order_by {
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  value: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_measurement_value_var_samp_fields {
+  device_id: Float
+  device_measurement_property_id: Float
+  id: Float
+  value: Float
+}
+
+"""
+order by var_samp() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_var_samp_order_by {
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  value: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type device_measurement_value_variance_fields {
+  device_id: Float
+  device_measurement_property_id: Float
+  id: Float
+  value: Float
+}
+
+"""
+order by variance() on columns of table "device_measurement_value"
+"""
+input device_measurement_value_variance_order_by {
+  device_id: order_by
+  device_measurement_property_id: order_by
+  id: order_by
+  value: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type device_min_fields {
+  created_at: timestamptz
+  description: String
+  device_type_id: bigint
+  id: bigint
+  location_id: bigint
+  name: String
+  remarks: String
+  serial_number: String
+  site_id: bigint
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "device"
+"""
+input device_min_order_by {
+  created_at: order_by
+  description: order_by
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  name: order_by
+  remarks: order_by
+  serial_number: order_by
+  site_id: order_by
+  updated_at: order_by
+}
+
+"""
+columns and relationships of "device_operation"
+"""
+type device_operation {
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  device: device!
+  device_id: bigint!
+
+  """
+  An object relationship
+  """
+  device_operation: device_operation
+
+  """
+  An array relationship
+  """
+  device_operation_images(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_image_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_image_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_image_bool_exp
+  ): [device_operation_image!]!
+
+  """
+  An aggregate relationship
+  """
+  device_operation_images_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_image_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_image_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_image_bool_exp
+  ): device_operation_image_aggregate!
+
+  """
+  An object relationship
+  """
+  device_operation_log: device_operation_log
+  device_operation_log_id: bigint
+  device_operation_type: device_operation_type!
+
+  """
+  An array relationship
+  """
+  device_operations(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): [device_operation!]!
+
+  """
+  An aggregate relationship
+  """
+  device_operations_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): device_operation_aggregate!
+  end_at: timestamp
+  error_code: String
+  error_details: String
+  id: bigint!
+  parent_id: bigint
+  remote_operation_uid: String!
+  start_at: timestamp!
+  success: Boolean
+  updatedAt: timestamptz!
+}
+
+"""
+aggregated selection of "device_operation"
+"""
+type device_operation_aggregate {
+  aggregate: device_operation_aggregate_fields
+  nodes: [device_operation!]!
+}
+
+input device_operation_aggregate_bool_exp {
+  bool_and: device_operation_aggregate_bool_exp_bool_and
+  bool_or: device_operation_aggregate_bool_exp_bool_or
+  count: device_operation_aggregate_bool_exp_count
+}
+
+input device_operation_aggregate_bool_exp_bool_and {
+  arguments: device_operation_select_column_device_operation_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: device_operation_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input device_operation_aggregate_bool_exp_bool_or {
+  arguments: device_operation_select_column_device_operation_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: device_operation_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input device_operation_aggregate_bool_exp_count {
+  arguments: [device_operation_select_column!]
+  distinct: Boolean
+  filter: device_operation_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "device_operation"
+"""
+type device_operation_aggregate_fields {
+  avg: device_operation_avg_fields
+  count(columns: [device_operation_select_column!], distinct: Boolean): Int!
+  max: device_operation_max_fields
+  min: device_operation_min_fields
+  stddev: device_operation_stddev_fields
+  stddev_pop: device_operation_stddev_pop_fields
+  stddev_samp: device_operation_stddev_samp_fields
+  sum: device_operation_sum_fields
+  var_pop: device_operation_var_pop_fields
+  var_samp: device_operation_var_samp_fields
+  variance: device_operation_variance_fields
+}
+
+"""
+order by aggregate values of table "device_operation"
+"""
+input device_operation_aggregate_order_by {
+  avg: device_operation_avg_order_by
+  count: order_by
+  max: device_operation_max_order_by
+  min: device_operation_min_order_by
+  stddev: device_operation_stddev_order_by
+  stddev_pop: device_operation_stddev_pop_order_by
+  stddev_samp: device_operation_stddev_samp_order_by
+  sum: device_operation_sum_order_by
+  var_pop: device_operation_var_pop_order_by
+  var_samp: device_operation_var_samp_order_by
+  variance: device_operation_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type device_operation_avg_fields {
+  device_id: Float
+  device_operation_log_id: Float
+  id: Float
+  parent_id: Float
+}
+
+"""
+order by avg() on columns of table "device_operation"
+"""
+input device_operation_avg_order_by {
+  device_id: order_by
+  device_operation_log_id: order_by
+  id: order_by
+  parent_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "device_operation". All fields are combined with a logical 'AND'.
+"""
+input device_operation_bool_exp {
+  _and: [device_operation_bool_exp!]
+  _not: device_operation_bool_exp
+  _or: [device_operation_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  device: device_bool_exp
+  device_id: bigint_comparison_exp
+  device_operation: device_operation_bool_exp
+  device_operation_images: device_operation_image_bool_exp
+  device_operation_images_aggregate: device_operation_image_aggregate_bool_exp
+  device_operation_log: device_operation_log_bool_exp
+  device_operation_log_id: bigint_comparison_exp
+  device_operation_type: device_operation_type_comparison_exp
+  device_operations: device_operation_bool_exp
+  device_operations_aggregate: device_operation_aggregate_bool_exp
+  end_at: timestamp_comparison_exp
+  error_code: String_comparison_exp
+  error_details: String_comparison_exp
+  id: bigint_comparison_exp
+  parent_id: bigint_comparison_exp
+  remote_operation_uid: String_comparison_exp
+  start_at: timestamp_comparison_exp
+  success: Boolean_comparison_exp
+  updatedAt: timestamptz_comparison_exp
+}
+
+"""
+columns and relationships of "device_operation_image"
+"""
+type device_operation_image {
+  blob_uid: String!
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  device_operation: device_operation!
+  device_operation_id: bigint!
+  file_name: String!
+  id: bigint!
+  meta_data(
+    """
+    JSON select path
+    """
+    path: String
+  ): jsonb
+  recorded_at: timestamptz!
+  size: bigint!
+  type: device_operation_image_type!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "device_operation_image"
+"""
+type device_operation_image_aggregate {
+  aggregate: device_operation_image_aggregate_fields
+  nodes: [device_operation_image!]!
+}
+
+input device_operation_image_aggregate_bool_exp {
+  count: device_operation_image_aggregate_bool_exp_count
+}
+
+input device_operation_image_aggregate_bool_exp_count {
+  arguments: [device_operation_image_select_column!]
+  distinct: Boolean
+  filter: device_operation_image_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "device_operation_image"
+"""
+type device_operation_image_aggregate_fields {
+  avg: device_operation_image_avg_fields
+  count(
+    columns: [device_operation_image_select_column!]
+    distinct: Boolean
+  ): Int!
+  max: device_operation_image_max_fields
+  min: device_operation_image_min_fields
+  stddev: device_operation_image_stddev_fields
+  stddev_pop: device_operation_image_stddev_pop_fields
+  stddev_samp: device_operation_image_stddev_samp_fields
+  sum: device_operation_image_sum_fields
+  var_pop: device_operation_image_var_pop_fields
+  var_samp: device_operation_image_var_samp_fields
+  variance: device_operation_image_variance_fields
+}
+
+"""
+order by aggregate values of table "device_operation_image"
+"""
+input device_operation_image_aggregate_order_by {
+  avg: device_operation_image_avg_order_by
+  count: order_by
+  max: device_operation_image_max_order_by
+  min: device_operation_image_min_order_by
+  stddev: device_operation_image_stddev_order_by
+  stddev_pop: device_operation_image_stddev_pop_order_by
+  stddev_samp: device_operation_image_stddev_samp_order_by
+  sum: device_operation_image_sum_order_by
+  var_pop: device_operation_image_var_pop_order_by
+  var_samp: device_operation_image_var_samp_order_by
+  variance: device_operation_image_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type device_operation_image_avg_fields {
+  device_operation_id: Float
+  id: Float
+  size: Float
+}
+
+"""
+order by avg() on columns of table "device_operation_image"
+"""
+input device_operation_image_avg_order_by {
+  device_operation_id: order_by
+  id: order_by
+  size: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "device_operation_image". All fields are combined with a logical 'AND'.
+"""
+input device_operation_image_bool_exp {
+  _and: [device_operation_image_bool_exp!]
+  _not: device_operation_image_bool_exp
+  _or: [device_operation_image_bool_exp!]
+  blob_uid: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  device_operation: device_operation_bool_exp
+  device_operation_id: bigint_comparison_exp
+  file_name: String_comparison_exp
+  id: bigint_comparison_exp
+  meta_data: jsonb_comparison_exp
+  recorded_at: timestamptz_comparison_exp
+  size: bigint_comparison_exp
+  type: device_operation_image_type_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type device_operation_image_max_fields {
+  blob_uid: String
+  created_at: timestamptz
+  device_operation_id: bigint
+  file_name: String
+  id: bigint
+  recorded_at: timestamptz
+  size: bigint
+  type: device_operation_image_type
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "device_operation_image"
+"""
+input device_operation_image_max_order_by {
+  blob_uid: order_by
+  created_at: order_by
+  device_operation_id: order_by
+  file_name: order_by
+  id: order_by
+  recorded_at: order_by
+  size: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type device_operation_image_min_fields {
+  blob_uid: String
+  created_at: timestamptz
+  device_operation_id: bigint
+  file_name: String
+  id: bigint
+  recorded_at: timestamptz
+  size: bigint
+  type: device_operation_image_type
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "device_operation_image"
+"""
+input device_operation_image_min_order_by {
+  blob_uid: order_by
+  created_at: order_by
+  device_operation_id: order_by
+  file_name: order_by
+  id: order_by
+  recorded_at: order_by
+  size: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""
+Ordering options when selecting data from "device_operation_image".
+"""
+input device_operation_image_order_by {
+  blob_uid: order_by
+  created_at: order_by
+  device_operation: device_operation_order_by
+  device_operation_id: order_by
+  file_name: order_by
+  id: order_by
+  meta_data: order_by
+  recorded_at: order_by
+  size: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "device_operation_image"
+"""
+enum device_operation_image_select_column {
+  """
+  column name
+  """
+  blob_uid
+
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  device_operation_id
+
+  """
+  column name
+  """
+  file_name
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  meta_data
+
+  """
+  column name
+  """
+  recorded_at
+
+  """
+  column name
+  """
+  size
+
+  """
+  column name
+  """
+  type
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_operation_image_stddev_fields {
+  device_operation_id: Float
+  id: Float
+  size: Float
+}
+
+"""
+order by stddev() on columns of table "device_operation_image"
+"""
+input device_operation_image_stddev_order_by {
+  device_operation_id: order_by
+  id: order_by
+  size: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_operation_image_stddev_pop_fields {
+  device_operation_id: Float
+  id: Float
+  size: Float
+}
+
+"""
+order by stddev_pop() on columns of table "device_operation_image"
+"""
+input device_operation_image_stddev_pop_order_by {
+  device_operation_id: order_by
+  id: order_by
+  size: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_operation_image_stddev_samp_fields {
+  device_operation_id: Float
+  id: Float
+  size: Float
+}
+
+"""
+order by stddev_samp() on columns of table "device_operation_image"
+"""
+input device_operation_image_stddev_samp_order_by {
+  device_operation_id: order_by
+  id: order_by
+  size: order_by
+}
+
+"""
+Streaming cursor of the table "device_operation_image"
+"""
+input device_operation_image_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_operation_image_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_operation_image_stream_cursor_value_input {
+  blob_uid: String
+  created_at: timestamptz
+  device_operation_id: bigint
+  file_name: String
+  id: bigint
+  meta_data: jsonb
+  recorded_at: timestamptz
+  size: bigint
+  type: device_operation_image_type
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type device_operation_image_sum_fields {
+  device_operation_id: bigint
+  id: bigint
+  size: bigint
+}
+
+"""
+order by sum() on columns of table "device_operation_image"
+"""
+input device_operation_image_sum_order_by {
+  device_operation_id: order_by
+  id: order_by
+  size: order_by
+}
+
+scalar device_operation_image_type
+
+"""
+Boolean expression to compare columns of type "device_operation_image_type". All fields are combined with logical 'AND'.
+"""
+input device_operation_image_type_comparison_exp {
+  _eq: device_operation_image_type
+  _gt: device_operation_image_type
+  _gte: device_operation_image_type
+  _in: [device_operation_image_type!]
+  _is_null: Boolean
+  _lt: device_operation_image_type
+  _lte: device_operation_image_type
+  _neq: device_operation_image_type
+  _nin: [device_operation_image_type!]
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_operation_image_var_pop_fields {
+  device_operation_id: Float
+  id: Float
+  size: Float
+}
+
+"""
+order by var_pop() on columns of table "device_operation_image"
+"""
+input device_operation_image_var_pop_order_by {
+  device_operation_id: order_by
+  id: order_by
+  size: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_operation_image_var_samp_fields {
+  device_operation_id: Float
+  id: Float
+  size: Float
+}
+
+"""
+order by var_samp() on columns of table "device_operation_image"
+"""
+input device_operation_image_var_samp_order_by {
+  device_operation_id: order_by
+  id: order_by
+  size: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type device_operation_image_variance_fields {
+  device_operation_id: Float
+  id: Float
+  size: Float
+}
+
+"""
+order by variance() on columns of table "device_operation_image"
+"""
+input device_operation_image_variance_order_by {
+  device_operation_id: order_by
+  id: order_by
+  size: order_by
+}
+
+"""
+columns and relationships of "device_operation_log"
+"""
+type device_operation_log {
+  blob_uid: String!
+
+  """
+  An array relationship
+  """
+  device_operations(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): [device_operation!]!
+
+  """
+  An aggregate relationship
+  """
+  device_operations_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): device_operation_aggregate!
+  id: bigint!
+  size: bigint!
+}
+
+"""
+aggregated selection of "device_operation_log"
+"""
+type device_operation_log_aggregate {
+  aggregate: device_operation_log_aggregate_fields
+  nodes: [device_operation_log!]!
+}
+
+"""
+aggregate fields of "device_operation_log"
+"""
+type device_operation_log_aggregate_fields {
+  avg: device_operation_log_avg_fields
+  count(columns: [device_operation_log_select_column!], distinct: Boolean): Int!
+  max: device_operation_log_max_fields
+  min: device_operation_log_min_fields
+  stddev: device_operation_log_stddev_fields
+  stddev_pop: device_operation_log_stddev_pop_fields
+  stddev_samp: device_operation_log_stddev_samp_fields
+  sum: device_operation_log_sum_fields
+  var_pop: device_operation_log_var_pop_fields
+  var_samp: device_operation_log_var_samp_fields
+  variance: device_operation_log_variance_fields
+}
+
+"""
+aggregate avg on columns
+"""
+type device_operation_log_avg_fields {
+  id: Float
+  size: Float
+}
+
+"""
+Boolean expression to filter rows from the table "device_operation_log". All fields are combined with a logical 'AND'.
+"""
+input device_operation_log_bool_exp {
+  _and: [device_operation_log_bool_exp!]
+  _not: device_operation_log_bool_exp
+  _or: [device_operation_log_bool_exp!]
+  blob_uid: String_comparison_exp
+  device_operations: device_operation_bool_exp
+  device_operations_aggregate: device_operation_aggregate_bool_exp
+  id: bigint_comparison_exp
+  size: bigint_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type device_operation_log_max_fields {
+  blob_uid: String
+  id: bigint
+  size: bigint
+}
+
+"""
+aggregate min on columns
+"""
+type device_operation_log_min_fields {
+  blob_uid: String
+  id: bigint
+  size: bigint
+}
+
+"""
+Ordering options when selecting data from "device_operation_log".
+"""
+input device_operation_log_order_by {
+  blob_uid: order_by
+  device_operations_aggregate: device_operation_aggregate_order_by
+  id: order_by
+  size: order_by
+}
+
+"""
+select columns of table "device_operation_log"
+"""
+enum device_operation_log_select_column {
+  """
+  column name
+  """
+  blob_uid
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  size
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_operation_log_stddev_fields {
+  id: Float
+  size: Float
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_operation_log_stddev_pop_fields {
+  id: Float
+  size: Float
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_operation_log_stddev_samp_fields {
+  id: Float
+  size: Float
+}
+
+"""
+Streaming cursor of the table "device_operation_log"
+"""
+input device_operation_log_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_operation_log_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_operation_log_stream_cursor_value_input {
+  blob_uid: String
+  id: bigint
+  size: bigint
+}
+
+"""
+aggregate sum on columns
+"""
+type device_operation_log_sum_fields {
+  id: bigint
+  size: bigint
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_operation_log_var_pop_fields {
+  id: Float
+  size: Float
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_operation_log_var_samp_fields {
+  id: Float
+  size: Float
+}
+
+"""
+aggregate variance on columns
+"""
+type device_operation_log_variance_fields {
+  id: Float
+  size: Float
+}
+
+"""
+aggregate max on columns
+"""
+type device_operation_max_fields {
+  created_at: timestamptz
+  device_id: bigint
+  device_operation_log_id: bigint
+  device_operation_type: device_operation_type
+  end_at: timestamp
+  error_code: String
+  error_details: String
+  id: bigint
+  parent_id: bigint
+  remote_operation_uid: String
+  start_at: timestamp
+  updatedAt: timestamptz
+}
+
+"""
+order by max() on columns of table "device_operation"
+"""
+input device_operation_max_order_by {
+  created_at: order_by
+  device_id: order_by
+  device_operation_log_id: order_by
+  device_operation_type: order_by
+  end_at: order_by
+  error_code: order_by
+  error_details: order_by
+  id: order_by
+  parent_id: order_by
+  remote_operation_uid: order_by
+  start_at: order_by
+  updatedAt: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type device_operation_min_fields {
+  created_at: timestamptz
+  device_id: bigint
+  device_operation_log_id: bigint
+  device_operation_type: device_operation_type
+  end_at: timestamp
+  error_code: String
+  error_details: String
+  id: bigint
+  parent_id: bigint
+  remote_operation_uid: String
+  start_at: timestamp
+  updatedAt: timestamptz
+}
+
+"""
+order by min() on columns of table "device_operation"
+"""
+input device_operation_min_order_by {
+  created_at: order_by
+  device_id: order_by
+  device_operation_log_id: order_by
+  device_operation_type: order_by
+  end_at: order_by
+  error_code: order_by
+  error_details: order_by
+  id: order_by
+  parent_id: order_by
+  remote_operation_uid: order_by
+  start_at: order_by
+  updatedAt: order_by
+}
+
+"""
+Ordering options when selecting data from "device_operation".
+"""
+input device_operation_order_by {
+  created_at: order_by
+  device: device_order_by
+  device_id: order_by
+  device_operation: device_operation_order_by
+  device_operation_images_aggregate: device_operation_image_aggregate_order_by
+  device_operation_log: device_operation_log_order_by
+  device_operation_log_id: order_by
+  device_operation_type: order_by
+  device_operations_aggregate: device_operation_aggregate_order_by
+  end_at: order_by
+  error_code: order_by
+  error_details: order_by
+  id: order_by
+  parent_id: order_by
+  remote_operation_uid: order_by
+  start_at: order_by
+  success: order_by
+  updatedAt: order_by
+}
+
+"""
+select columns of table "device_operation"
+"""
+enum device_operation_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  device_id
+
+  """
+  column name
+  """
+  device_operation_log_id
+
+  """
+  column name
+  """
+  device_operation_type
+
+  """
+  column name
+  """
+  end_at
+
+  """
+  column name
+  """
+  error_code
+
+  """
+  column name
+  """
+  error_details
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  parent_id
+
+  """
+  column name
+  """
+  remote_operation_uid
+
+  """
+  column name
+  """
+  start_at
+
+  """
+  column name
+  """
+  success
+
+  """
+  column name
+  """
+  updatedAt
+}
+
+"""
+select "device_operation_aggregate_bool_exp_bool_and_arguments_columns" columns of table "device_operation"
+"""
+enum device_operation_select_column_device_operation_aggregate_bool_exp_bool_and_arguments_columns {
+  """
+  column name
+  """
+  success
+}
+
+"""
+select "device_operation_aggregate_bool_exp_bool_or_arguments_columns" columns of table "device_operation"
+"""
+enum device_operation_select_column_device_operation_aggregate_bool_exp_bool_or_arguments_columns {
+  """
+  column name
+  """
+  success
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_operation_stddev_fields {
+  device_id: Float
+  device_operation_log_id: Float
+  id: Float
+  parent_id: Float
+}
+
+"""
+order by stddev() on columns of table "device_operation"
+"""
+input device_operation_stddev_order_by {
+  device_id: order_by
+  device_operation_log_id: order_by
+  id: order_by
+  parent_id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_operation_stddev_pop_fields {
+  device_id: Float
+  device_operation_log_id: Float
+  id: Float
+  parent_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "device_operation"
+"""
+input device_operation_stddev_pop_order_by {
+  device_id: order_by
+  device_operation_log_id: order_by
+  id: order_by
+  parent_id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_operation_stddev_samp_fields {
+  device_id: Float
+  device_operation_log_id: Float
+  id: Float
+  parent_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "device_operation"
+"""
+input device_operation_stddev_samp_order_by {
+  device_id: order_by
+  device_operation_log_id: order_by
+  id: order_by
+  parent_id: order_by
+}
+
+"""
+Streaming cursor of the table "device_operation"
+"""
+input device_operation_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_operation_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_operation_stream_cursor_value_input {
+  created_at: timestamptz
+  device_id: bigint
+  device_operation_log_id: bigint
+  device_operation_type: device_operation_type
+  end_at: timestamp
+  error_code: String
+  error_details: String
+  id: bigint
+  parent_id: bigint
+  remote_operation_uid: String
+  start_at: timestamp
+  success: Boolean
+  updatedAt: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type device_operation_sum_fields {
+  device_id: bigint
+  device_operation_log_id: bigint
+  id: bigint
+  parent_id: bigint
+}
+
+"""
+order by sum() on columns of table "device_operation"
+"""
+input device_operation_sum_order_by {
+  device_id: order_by
+  device_operation_log_id: order_by
+  id: order_by
+  parent_id: order_by
+}
+
+scalar device_operation_type
+
+"""
+Boolean expression to compare columns of type "device_operation_type". All fields are combined with logical 'AND'.
+"""
+input device_operation_type_comparison_exp {
+  _eq: device_operation_type
+  _gt: device_operation_type
+  _gte: device_operation_type
+  _in: [device_operation_type!]
+  _is_null: Boolean
+  _lt: device_operation_type
+  _lte: device_operation_type
+  _neq: device_operation_type
+  _nin: [device_operation_type!]
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_operation_var_pop_fields {
+  device_id: Float
+  device_operation_log_id: Float
+  id: Float
+  parent_id: Float
+}
+
+"""
+order by var_pop() on columns of table "device_operation"
+"""
+input device_operation_var_pop_order_by {
+  device_id: order_by
+  device_operation_log_id: order_by
+  id: order_by
+  parent_id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_operation_var_samp_fields {
+  device_id: Float
+  device_operation_log_id: Float
+  id: Float
+  parent_id: Float
+}
+
+"""
+order by var_samp() on columns of table "device_operation"
+"""
+input device_operation_var_samp_order_by {
+  device_id: order_by
+  device_operation_log_id: order_by
+  id: order_by
+  parent_id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type device_operation_variance_fields {
+  device_id: Float
+  device_operation_log_id: Float
+  id: Float
+  parent_id: Float
+}
+
+"""
+order by variance() on columns of table "device_operation"
+"""
+input device_operation_variance_order_by {
+  device_id: order_by
+  device_operation_log_id: order_by
+  id: order_by
+  parent_id: order_by
+}
+
+"""
+Ordering options when selecting data from "device".
+"""
+input device_order_by {
+  created_at: order_by
+  description: order_by
+  device_configurations_aggregate: device_configuration_aggregate_order_by
+  device_group_devices_aggregate: device_group_device_aggregate_order_by
+  device_measurement_values_aggregate: device_measurement_value_aggregate_order_by
+  device_operations_aggregate: device_operation_aggregate_order_by
+  device_states_aggregate: device_state_aggregate_order_by
+  device_type: device_type_order_by
+  device_type_id: order_by
+  id: order_by
+  location: location_order_by
+  location_id: order_by
+  name: order_by
+  remarks: order_by
+  serial_number: order_by
+  site: site_order_by
+  site_id: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "device"
+"""
+enum device_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  description
+
+  """
+  column name
+  """
+  device_type_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  location_id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  remarks
+
+  """
+  column name
+  """
+  serial_number
+
+  """
+  column name
+  """
+  site_id
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+columns and relationships of "device_state"
+"""
+type device_state {
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  device: device!
+  device_id: bigint!
+  id: bigint!
+  recorded_at: timestamptz!
+  updated_at: timestamptz!
+  value: String!
+}
+
+"""
+aggregated selection of "device_state"
+"""
+type device_state_aggregate {
+  aggregate: device_state_aggregate_fields
+  nodes: [device_state!]!
+}
+
+input device_state_aggregate_bool_exp {
+  count: device_state_aggregate_bool_exp_count
+}
+
+input device_state_aggregate_bool_exp_count {
+  arguments: [device_state_select_column!]
+  distinct: Boolean
+  filter: device_state_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "device_state"
+"""
+type device_state_aggregate_fields {
+  avg: device_state_avg_fields
+  count(columns: [device_state_select_column!], distinct: Boolean): Int!
+  max: device_state_max_fields
+  min: device_state_min_fields
+  stddev: device_state_stddev_fields
+  stddev_pop: device_state_stddev_pop_fields
+  stddev_samp: device_state_stddev_samp_fields
+  sum: device_state_sum_fields
+  var_pop: device_state_var_pop_fields
+  var_samp: device_state_var_samp_fields
+  variance: device_state_variance_fields
+}
+
+"""
+order by aggregate values of table "device_state"
+"""
+input device_state_aggregate_order_by {
+  avg: device_state_avg_order_by
+  count: order_by
+  max: device_state_max_order_by
+  min: device_state_min_order_by
+  stddev: device_state_stddev_order_by
+  stddev_pop: device_state_stddev_pop_order_by
+  stddev_samp: device_state_stddev_samp_order_by
+  sum: device_state_sum_order_by
+  var_pop: device_state_var_pop_order_by
+  var_samp: device_state_var_samp_order_by
+  variance: device_state_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type device_state_avg_fields {
+  device_id: Float
+  id: Float
+}
+
+"""
+order by avg() on columns of table "device_state"
+"""
+input device_state_avg_order_by {
+  device_id: order_by
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "device_state". All fields are combined with a logical 'AND'.
+"""
+input device_state_bool_exp {
+  _and: [device_state_bool_exp!]
+  _not: device_state_bool_exp
+  _or: [device_state_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  device: device_bool_exp
+  device_id: bigint_comparison_exp
+  id: bigint_comparison_exp
+  recorded_at: timestamptz_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  value: String_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type device_state_max_fields {
+  created_at: timestamptz
+  device_id: bigint
+  id: bigint
+  recorded_at: timestamptz
+  updated_at: timestamptz
+  value: String
+}
+
+"""
+order by max() on columns of table "device_state"
+"""
+input device_state_max_order_by {
+  created_at: order_by
+  device_id: order_by
+  id: order_by
+  recorded_at: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type device_state_min_fields {
+  created_at: timestamptz
+  device_id: bigint
+  id: bigint
+  recorded_at: timestamptz
+  updated_at: timestamptz
+  value: String
+}
+
+"""
+order by min() on columns of table "device_state"
+"""
+input device_state_min_order_by {
+  created_at: order_by
+  device_id: order_by
+  id: order_by
+  recorded_at: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""
+Ordering options when selecting data from "device_state".
+"""
+input device_state_order_by {
+  created_at: order_by
+  device: device_order_by
+  device_id: order_by
+  id: order_by
+  recorded_at: order_by
+  updated_at: order_by
+  value: order_by
+}
+
+"""
+select columns of table "device_state"
+"""
+enum device_state_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  device_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  recorded_at
+
+  """
+  column name
+  """
+  updated_at
+
+  """
+  column name
+  """
+  value
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_state_stddev_fields {
+  device_id: Float
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "device_state"
+"""
+input device_state_stddev_order_by {
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_state_stddev_pop_fields {
+  device_id: Float
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "device_state"
+"""
+input device_state_stddev_pop_order_by {
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_state_stddev_samp_fields {
+  device_id: Float
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "device_state"
+"""
+input device_state_stddev_samp_order_by {
+  device_id: order_by
+  id: order_by
+}
+
+"""
+Streaming cursor of the table "device_state"
+"""
+input device_state_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_state_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_state_stream_cursor_value_input {
+  created_at: timestamptz
+  device_id: bigint
+  id: bigint
+  recorded_at: timestamptz
+  updated_at: timestamptz
+  value: String
+}
+
+"""
+aggregate sum on columns
+"""
+type device_state_sum_fields {
+  device_id: bigint
+  id: bigint
+}
+
+"""
+order by sum() on columns of table "device_state"
+"""
+input device_state_sum_order_by {
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_state_var_pop_fields {
+  device_id: Float
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "device_state"
+"""
+input device_state_var_pop_order_by {
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_state_var_samp_fields {
+  device_id: Float
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "device_state"
+"""
+input device_state_var_samp_order_by {
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type device_state_variance_fields {
+  device_id: Float
+  id: Float
+}
+
+"""
+order by variance() on columns of table "device_state"
+"""
+input device_state_variance_order_by {
+  device_id: order_by
+  id: order_by
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_stddev_fields {
+  device_type_id: Float
+  id: Float
+  location_id: Float
+  site_id: Float
+}
+
+"""
+order by stddev() on columns of table "device"
+"""
+input device_stddev_order_by {
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  site_id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_stddev_pop_fields {
+  device_type_id: Float
+  id: Float
+  location_id: Float
+  site_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "device"
+"""
+input device_stddev_pop_order_by {
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  site_id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_stddev_samp_fields {
+  device_type_id: Float
+  id: Float
+  location_id: Float
+  site_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "device"
+"""
+input device_stddev_samp_order_by {
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  site_id: order_by
+}
+
+"""
+Streaming cursor of the table "device"
+"""
+input device_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_stream_cursor_value_input {
+  created_at: timestamptz
+  description: String
+  device_type_id: bigint
+  id: bigint
+  location_id: bigint
+  name: String
+  remarks: String
+  serial_number: String
+  site_id: bigint
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type device_sum_fields {
+  device_type_id: bigint
+  id: bigint
+  location_id: bigint
+  site_id: bigint
+}
+
+"""
+order by sum() on columns of table "device"
+"""
+input device_sum_order_by {
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  site_id: order_by
+}
+
+"""
+columns and relationships of "device_type"
+"""
+type device_type {
+  created_at: timestamp!
+
+  """
+  An array relationship
+  """
+  devices(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): [device!]!
+
+  """
+  An aggregate relationship
+  """
+  devices_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): device_aggregate!
+  id: bigint!
+  model_number: String!
+  name: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "device_type"
+"""
+type device_type_aggregate {
+  aggregate: device_type_aggregate_fields
+  nodes: [device_type!]!
+}
+
+"""
+aggregate fields of "device_type"
+"""
+type device_type_aggregate_fields {
+  avg: device_type_avg_fields
+  count(columns: [device_type_select_column!], distinct: Boolean): Int!
+  max: device_type_max_fields
+  min: device_type_min_fields
+  stddev: device_type_stddev_fields
+  stddev_pop: device_type_stddev_pop_fields
+  stddev_samp: device_type_stddev_samp_fields
+  sum: device_type_sum_fields
+  var_pop: device_type_var_pop_fields
+  var_samp: device_type_var_samp_fields
+  variance: device_type_variance_fields
+}
+
+"""
+aggregate avg on columns
+"""
+type device_type_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "device_type". All fields are combined with a logical 'AND'.
+"""
+input device_type_bool_exp {
+  _and: [device_type_bool_exp!]
+  _not: device_type_bool_exp
+  _or: [device_type_bool_exp!]
+  created_at: timestamp_comparison_exp
+  devices: device_bool_exp
+  devices_aggregate: device_aggregate_bool_exp
+  id: bigint_comparison_exp
+  model_number: String_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type device_type_max_fields {
+  created_at: timestamp
+  id: bigint
+  model_number: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate min on columns
+"""
+type device_type_min_fields {
+  created_at: timestamp
+  id: bigint
+  model_number: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+Ordering options when selecting data from "device_type".
+"""
+input device_type_order_by {
+  created_at: order_by
+  devices_aggregate: device_aggregate_order_by
+  id: order_by
+  model_number: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "device_type"
+"""
+enum device_type_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  model_number
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+aggregate stddev on columns
+"""
+type device_type_stddev_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type device_type_stddev_pop_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type device_type_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "device_type"
+"""
+input device_type_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: device_type_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input device_type_stream_cursor_value_input {
+  created_at: timestamp
+  id: bigint
+  model_number: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type device_type_sum_fields {
+  id: bigint
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_type_var_pop_fields {
+  id: Float
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_type_var_samp_fields {
+  id: Float
+}
+
+"""
+aggregate variance on columns
+"""
+type device_type_variance_fields {
+  id: Float
+}
+
+"""
+aggregate var_pop on columns
+"""
+type device_var_pop_fields {
+  device_type_id: Float
+  id: Float
+  location_id: Float
+  site_id: Float
+}
+
+"""
+order by var_pop() on columns of table "device"
+"""
+input device_var_pop_order_by {
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  site_id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type device_var_samp_fields {
+  device_type_id: Float
+  id: Float
+  location_id: Float
+  site_id: Float
+}
+
+"""
+order by var_samp() on columns of table "device"
+"""
+input device_var_samp_order_by {
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  site_id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type device_variance_fields {
+  device_type_id: Float
+  id: Float
+  location_id: Float
+  site_id: Float
+}
+
+"""
+order by variance() on columns of table "device"
+"""
+input device_variance_order_by {
+  device_type_id: order_by
+  id: order_by
+  location_id: order_by
+  site_id: order_by
+}
+
+scalar float8
+
+"""
+Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'.
+"""
+input float8_comparison_exp {
+  _eq: float8
+  _gt: float8
+  _gte: float8
+  _in: [float8!]
+  _is_null: Boolean
+  _lt: float8
+  _lte: float8
+  _neq: float8
+  _nin: [float8!]
+}
+
+scalar jsonb
+
+input jsonb_cast_exp {
+  String: String_comparison_exp
+}
+
+"""
+Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
+"""
+input jsonb_comparison_exp {
+  _cast: jsonb_cast_exp
+
+  """
+  is the column contained in the given json value
+  """
+  _contained_in: jsonb
+
+  """
+  does the column contain the given json value at the top level
+  """
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+
+  """
+  does the string exist as a top-level key in the column
+  """
+  _has_key: String
+
+  """
+  do all of these strings exist as top-level keys in the column
+  """
+  _has_keys_all: [String!]
+
+  """
+  do any of these strings exist as top-level keys in the column
+  """
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
+"""
+columns and relationships of "location"
+"""
+type location {
+  created_at: timestamptz!
+
+  """
+  An array relationship
+  """
+  devices(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): [device!]!
+
+  """
+  An aggregate relationship
+  """
+  devices_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): device_aggregate!
+  id: bigint!
+  latitude: float8!
+  longitude: float8!
+
+  """
+  An array relationship
+  """
+  sites(
+    """
+    distinct select on columns
+    """
+    distinct_on: [site_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [site_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): [site!]!
+
+  """
+  An aggregate relationship
+  """
+  sites_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [site_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [site_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): site_aggregate!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "location"
+"""
+type location_aggregate {
+  aggregate: location_aggregate_fields
+  nodes: [location!]!
+}
+
+"""
+aggregate fields of "location"
+"""
+type location_aggregate_fields {
+  avg: location_avg_fields
+  count(columns: [location_select_column!], distinct: Boolean): Int!
+  max: location_max_fields
+  min: location_min_fields
+  stddev: location_stddev_fields
+  stddev_pop: location_stddev_pop_fields
+  stddev_samp: location_stddev_samp_fields
+  sum: location_sum_fields
+  var_pop: location_var_pop_fields
+  var_samp: location_var_samp_fields
+  variance: location_variance_fields
+}
+
+"""
+aggregate avg on columns
+"""
+type location_avg_fields {
+  id: Float
+  latitude: Float
+  longitude: Float
+}
+
+"""
+Boolean expression to filter rows from the table "location". All fields are combined with a logical 'AND'.
+"""
+input location_bool_exp {
+  _and: [location_bool_exp!]
+  _not: location_bool_exp
+  _or: [location_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  devices: device_bool_exp
+  devices_aggregate: device_aggregate_bool_exp
+  id: bigint_comparison_exp
+  latitude: float8_comparison_exp
+  longitude: float8_comparison_exp
+  sites: site_bool_exp
+  sites_aggregate: site_aggregate_bool_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type location_max_fields {
+  created_at: timestamptz
+  id: bigint
+  latitude: float8
+  longitude: float8
+  updated_at: timestamptz
+}
+
+"""
+aggregate min on columns
+"""
+type location_min_fields {
+  created_at: timestamptz
+  id: bigint
+  latitude: float8
+  longitude: float8
+  updated_at: timestamptz
+}
+
+"""
+Ordering options when selecting data from "location".
+"""
+input location_order_by {
+  created_at: order_by
+  devices_aggregate: device_aggregate_order_by
+  id: order_by
+  latitude: order_by
+  longitude: order_by
+  sites_aggregate: site_aggregate_order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "location"
+"""
+enum location_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  latitude
+
+  """
+  column name
+  """
+  longitude
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+aggregate stddev on columns
+"""
+type location_stddev_fields {
+  id: Float
+  latitude: Float
+  longitude: Float
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type location_stddev_pop_fields {
+  id: Float
+  latitude: Float
+  longitude: Float
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type location_stddev_samp_fields {
+  id: Float
+  latitude: Float
+  longitude: Float
+}
+
+"""
+Streaming cursor of the table "location"
+"""
+input location_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: location_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input location_stream_cursor_value_input {
+  created_at: timestamptz
+  id: bigint
+  latitude: float8
+  longitude: float8
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type location_sum_fields {
+  id: bigint
+  latitude: float8
+  longitude: float8
+}
+
+"""
+aggregate var_pop on columns
+"""
+type location_var_pop_fields {
+  id: Float
+  latitude: Float
+  longitude: Float
+}
+
+"""
+aggregate var_samp on columns
+"""
+type location_var_samp_fields {
+  id: Float
+  latitude: Float
+  longitude: Float
+}
+
+"""
+aggregate variance on columns
+"""
+type location_variance_fields {
+  id: Float
+  latitude: Float
+  longitude: Float
+}
+
+scalar measurement_property_unit
+
+"""
+Boolean expression to compare columns of type "measurement_property_unit". All fields are combined with logical 'AND'.
+"""
+input measurement_property_unit_comparison_exp {
+  _eq: measurement_property_unit
+  _gt: measurement_property_unit
+  _gte: measurement_property_unit
+  _in: [measurement_property_unit!]
+  _is_null: Boolean
+  _lt: measurement_property_unit
+  _lte: measurement_property_unit
+  _neq: measurement_property_unit
+  _nin: [measurement_property_unit!]
+}
+
+"""
+column ordering options
+"""
+enum order_by {
+  """
+  in ascending order, nulls last
+  """
+  asc
+
+  """
+  in ascending order, nulls first
+  """
+  asc_nulls_first
+
+  """
+  in ascending order, nulls last
+  """
+  asc_nulls_last
+
+  """
+  in descending order, nulls first
+  """
+  desc
+
+  """
+  in descending order, nulls first
+  """
+  desc_nulls_first
+
+  """
+  in descending order, nulls last
+  """
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "connnector_type"
+  """
+  connnector_type(
+    """
+    distinct select on columns
+    """
+    distinct_on: [connnector_type_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [connnector_type_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: connnector_type_bool_exp
+  ): [connnector_type!]!
+
+  """
+  fetch aggregated fields from the table: "connnector_type"
+  """
+  connnector_type_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [connnector_type_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [connnector_type_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: connnector_type_bool_exp
+  ): connnector_type_aggregate!
+
+  """
+  fetch data from the table: "connnector_type" using primary key columns
+  """
+  connnector_type_by_pk(id: bigint!): connnector_type
+
+  """
+  fetch data from the table: "customer"
+  """
+  customer(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_bool_exp
+  ): [customer!]!
+
+  """
+  fetch aggregated fields from the table: "customer"
+  """
+  customer_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_bool_exp
+  ): customer_aggregate!
+
+  """
+  fetch data from the table: "customer" using primary key columns
+  """
+  customer_by_pk(id: bigint!): customer
+
+  """
+  fetch data from the table: "customer_user"
+  """
+  customer_user(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): [customer_user!]!
+
+  """
+  fetch aggregated fields from the table: "customer_user"
+  """
+  customer_user_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): customer_user_aggregate!
+
+  """
+  fetch data from the table: "customer_user" using primary key columns
+  """
+  customer_user_by_pk(customer_id: bigint!, user_id: bigint!): customer_user
+
+  """
+  fetch data from the table: "device"
+  """
+  device(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): [device!]!
+
+  """
+  fetch aggregated fields from the table: "device"
+  """
+  device_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): device_aggregate!
+
+  """
+  fetch data from the table: "device" using primary key columns
+  """
+  device_by_pk(id: bigint!): device
+
+  """
+  fetch data from the table: "device_configuration"
+  """
+  device_configuration(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_configuration_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_configuration_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): [device_configuration!]!
+
+  """
+  fetch aggregated fields from the table: "device_configuration"
+  """
+  device_configuration_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_configuration_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_configuration_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): device_configuration_aggregate!
+
+  """
+  fetch data from the table: "device_configuration" using primary key columns
+  """
+  device_configuration_by_pk(id: bigint!): device_configuration
+
+  """
+  fetch data from the table: "device_group"
+  """
+  device_group(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_bool_exp
+  ): [device_group!]!
+
+  """
+  fetch aggregated fields from the table: "device_group"
+  """
+  device_group_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_bool_exp
+  ): device_group_aggregate!
+
+  """
+  fetch data from the table: "device_group" using primary key columns
+  """
+  device_group_by_pk(id: bigint!): device_group
+
+  """
+  fetch data from the table: "device_group_device"
+  """
+  device_group_device(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): [device_group_device!]!
+
+  """
+  fetch aggregated fields from the table: "device_group_device"
+  """
+  device_group_device_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): device_group_device_aggregate!
+
+  """
+  fetch data from the table: "device_group_device" using primary key columns
+  """
+  device_group_device_by_pk(
+    device_group_id: bigint!
+    device_id: bigint!
+  ): device_group_device
+
+  """
+  fetch data from the table: "device_measurement_property"
+  """
+  device_measurement_property(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_property_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_property_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_property_bool_exp
+  ): [device_measurement_property!]!
+
+  """
+  fetch aggregated fields from the table: "device_measurement_property"
+  """
+  device_measurement_property_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_property_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_property_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_property_bool_exp
+  ): device_measurement_property_aggregate!
+
+  """
+  fetch data from the table: "device_measurement_property" using primary key columns
+  """
+  device_measurement_property_by_pk(id: bigint!): device_measurement_property
+
+  """
+  fetch data from the table: "device_measurement_value"
+  """
+  device_measurement_value(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_value_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_value_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): [device_measurement_value!]!
+
+  """
+  fetch aggregated fields from the table: "device_measurement_value"
+  """
+  device_measurement_value_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_value_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_value_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): device_measurement_value_aggregate!
+
+  """
+  fetch data from the table: "device_measurement_value" using primary key columns
+  """
+  device_measurement_value_by_pk(id: bigint!): device_measurement_value
+
+  """
+  fetch data from the table: "device_operation"
+  """
+  device_operation(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): [device_operation!]!
+
+  """
+  fetch aggregated fields from the table: "device_operation"
+  """
+  device_operation_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): device_operation_aggregate!
+
+  """
+  fetch data from the table: "device_operation" using primary key columns
+  """
+  device_operation_by_pk(id: bigint!): device_operation
+
+  """
+  fetch data from the table: "device_operation_image"
+  """
+  device_operation_image(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_image_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_image_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_image_bool_exp
+  ): [device_operation_image!]!
+
+  """
+  fetch aggregated fields from the table: "device_operation_image"
+  """
+  device_operation_image_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_image_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_image_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_image_bool_exp
+  ): device_operation_image_aggregate!
+
+  """
+  fetch data from the table: "device_operation_image" using primary key columns
+  """
+  device_operation_image_by_pk(id: bigint!): device_operation_image
+
+  """
+  fetch data from the table: "device_operation_log"
+  """
+  device_operation_log(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_log_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_log_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_log_bool_exp
+  ): [device_operation_log!]!
+
+  """
+  fetch aggregated fields from the table: "device_operation_log"
+  """
+  device_operation_log_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_log_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_log_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_log_bool_exp
+  ): device_operation_log_aggregate!
+
+  """
+  fetch data from the table: "device_operation_log" using primary key columns
+  """
+  device_operation_log_by_pk(id: bigint!): device_operation_log
+
+  """
+  fetch data from the table: "device_state"
+  """
+  device_state(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_state_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_state_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_state_bool_exp
+  ): [device_state!]!
+
+  """
+  fetch aggregated fields from the table: "device_state"
+  """
+  device_state_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_state_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_state_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_state_bool_exp
+  ): device_state_aggregate!
+
+  """
+  fetch data from the table: "device_state" using primary key columns
+  """
+  device_state_by_pk(id: bigint!): device_state
+
+  """
+  fetch data from the table: "device_type"
+  """
+  device_type(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_type_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_type_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_type_bool_exp
+  ): [device_type!]!
+
+  """
+  fetch aggregated fields from the table: "device_type"
+  """
+  device_type_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_type_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_type_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_type_bool_exp
+  ): device_type_aggregate!
+
+  """
+  fetch data from the table: "device_type" using primary key columns
+  """
+  device_type_by_pk(id: bigint!): device_type
+
+  """
+  fetch data from the table: "location"
+  """
+  location(
+    """
+    distinct select on columns
+    """
+    distinct_on: [location_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [location_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: location_bool_exp
+  ): [location!]!
+
+  """
+  fetch aggregated fields from the table: "location"
+  """
+  location_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [location_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [location_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: location_bool_exp
+  ): location_aggregate!
+
+  """
+  fetch data from the table: "location" using primary key columns
+  """
+  location_by_pk(id: bigint!): location
+
+  """
+  fetch data from the table: "site"
+  """
+  site(
+    """
+    distinct select on columns
+    """
+    distinct_on: [site_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [site_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): [site!]!
+
+  """
+  fetch aggregated fields from the table: "site"
+  """
+  site_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [site_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [site_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): site_aggregate!
+
+  """
+  fetch data from the table: "site" using primary key columns
+  """
+  site_by_pk(id: bigint!): site
+
+  """
+  fetch data from the table: "user"
+  """
+  user(
+    """
+    distinct select on columns
+    """
+    distinct_on: [user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: user_bool_exp
+  ): [user!]!
+
+  """
+  fetch aggregated fields from the table: "user"
+  """
+  user_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: user_bool_exp
+  ): user_aggregate!
+
+  """
+  fetch data from the table: "user" using primary key columns
+  """
+  user_by_pk(id: bigint!): user
+}
+
+"""
+columns and relationships of "site"
+"""
+type site {
+  created_at: timestamptz!
+
+  """
+  An object relationship
+  """
+  customer: customer!
+  customer_id: bigint!
+  description: String
+
+  """
+  An array relationship
+  """
+  devices(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): [device!]!
+
+  """
+  An aggregate relationship
+  """
+  devices_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): device_aggregate!
+  id: bigint!
+
+  """
+  An object relationship
+  """
+  location: location!
+  location_id: bigint!
+  name: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "site"
+"""
+type site_aggregate {
+  aggregate: site_aggregate_fields
+  nodes: [site!]!
+}
+
+input site_aggregate_bool_exp {
+  count: site_aggregate_bool_exp_count
+}
+
+input site_aggregate_bool_exp_count {
+  arguments: [site_select_column!]
+  distinct: Boolean
+  filter: site_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "site"
+"""
+type site_aggregate_fields {
+  avg: site_avg_fields
+  count(columns: [site_select_column!], distinct: Boolean): Int!
+  max: site_max_fields
+  min: site_min_fields
+  stddev: site_stddev_fields
+  stddev_pop: site_stddev_pop_fields
+  stddev_samp: site_stddev_samp_fields
+  sum: site_sum_fields
+  var_pop: site_var_pop_fields
+  var_samp: site_var_samp_fields
+  variance: site_variance_fields
+}
+
+"""
+order by aggregate values of table "site"
+"""
+input site_aggregate_order_by {
+  avg: site_avg_order_by
+  count: order_by
+  max: site_max_order_by
+  min: site_min_order_by
+  stddev: site_stddev_order_by
+  stddev_pop: site_stddev_pop_order_by
+  stddev_samp: site_stddev_samp_order_by
+  sum: site_sum_order_by
+  var_pop: site_var_pop_order_by
+  var_samp: site_var_samp_order_by
+  variance: site_variance_order_by
+}
+
+"""
+aggregate avg on columns
+"""
+type site_avg_fields {
+  customer_id: Float
+  id: Float
+  location_id: Float
+}
+
+"""
+order by avg() on columns of table "site"
+"""
+input site_avg_order_by {
+  customer_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "site". All fields are combined with a logical 'AND'.
+"""
+input site_bool_exp {
+  _and: [site_bool_exp!]
+  _not: site_bool_exp
+  _or: [site_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  customer: customer_bool_exp
+  customer_id: bigint_comparison_exp
+  description: String_comparison_exp
+  devices: device_bool_exp
+  devices_aggregate: device_aggregate_bool_exp
+  id: bigint_comparison_exp
+  location: location_bool_exp
+  location_id: bigint_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type site_max_fields {
+  created_at: timestamptz
+  customer_id: bigint
+  description: String
+  id: bigint
+  location_id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "site"
+"""
+input site_max_order_by {
+  created_at: order_by
+  customer_id: order_by
+  description: order_by
+  id: order_by
+  location_id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type site_min_fields {
+  created_at: timestamptz
+  customer_id: bigint
+  description: String
+  id: bigint
+  location_id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "site"
+"""
+input site_min_order_by {
+  created_at: order_by
+  customer_id: order_by
+  description: order_by
+  id: order_by
+  location_id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+Ordering options when selecting data from "site".
+"""
+input site_order_by {
+  created_at: order_by
+  customer: customer_order_by
+  customer_id: order_by
+  description: order_by
+  devices_aggregate: device_aggregate_order_by
+  id: order_by
+  location: location_order_by
+  location_id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "site"
+"""
+enum site_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  customer_id
+
+  """
+  column name
+  """
+  description
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  location_id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+aggregate stddev on columns
+"""
+type site_stddev_fields {
+  customer_id: Float
+  id: Float
+  location_id: Float
+}
+
+"""
+order by stddev() on columns of table "site"
+"""
+input site_stddev_order_by {
+  customer_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type site_stddev_pop_fields {
+  customer_id: Float
+  id: Float
+  location_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "site"
+"""
+input site_stddev_pop_order_by {
+  customer_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type site_stddev_samp_fields {
+  customer_id: Float
+  id: Float
+  location_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "site"
+"""
+input site_stddev_samp_order_by {
+  customer_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
+"""
+Streaming cursor of the table "site"
+"""
+input site_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: site_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input site_stream_cursor_value_input {
+  created_at: timestamptz
+  customer_id: bigint
+  description: String
+  id: bigint
+  location_id: bigint
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type site_sum_fields {
+  customer_id: bigint
+  id: bigint
+  location_id: bigint
+}
+
+"""
+order by sum() on columns of table "site"
+"""
+input site_sum_order_by {
+  customer_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
+"""
+aggregate var_pop on columns
+"""
+type site_var_pop_fields {
+  customer_id: Float
+  id: Float
+  location_id: Float
+}
+
+"""
+order by var_pop() on columns of table "site"
+"""
+input site_var_pop_order_by {
+  customer_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type site_var_samp_fields {
+  customer_id: Float
+  id: Float
+  location_id: Float
+}
+
+"""
+order by var_samp() on columns of table "site"
+"""
+input site_var_samp_order_by {
+  customer_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type site_variance_fields {
+  customer_id: Float
+  id: Float
+  location_id: Float
+}
+
+"""
+order by variance() on columns of table "site"
+"""
+input site_variance_order_by {
+  customer_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "connnector_type"
+  """
+  connnector_type(
+    """
+    distinct select on columns
+    """
+    distinct_on: [connnector_type_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [connnector_type_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: connnector_type_bool_exp
+  ): [connnector_type!]!
+
+  """
+  fetch aggregated fields from the table: "connnector_type"
+  """
+  connnector_type_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [connnector_type_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [connnector_type_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: connnector_type_bool_exp
+  ): connnector_type_aggregate!
+
+  """
+  fetch data from the table: "connnector_type" using primary key columns
+  """
+  connnector_type_by_pk(id: bigint!): connnector_type
+
+  """
+  fetch data from the table in a streaming manner: "connnector_type"
+  """
+  connnector_type_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [connnector_type_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: connnector_type_bool_exp
+  ): [connnector_type!]!
+
+  """
+  fetch data from the table: "customer"
+  """
+  customer(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_bool_exp
+  ): [customer!]!
+
+  """
+  fetch aggregated fields from the table: "customer"
+  """
+  customer_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_bool_exp
+  ): customer_aggregate!
+
+  """
+  fetch data from the table: "customer" using primary key columns
+  """
+  customer_by_pk(id: bigint!): customer
+
+  """
+  fetch data from the table in a streaming manner: "customer"
+  """
+  customer_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [customer_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: customer_bool_exp
+  ): [customer!]!
+
+  """
+  fetch data from the table: "customer_user"
+  """
+  customer_user(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): [customer_user!]!
+
+  """
+  fetch aggregated fields from the table: "customer_user"
+  """
+  customer_user_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): customer_user_aggregate!
+
+  """
+  fetch data from the table: "customer_user" using primary key columns
+  """
+  customer_user_by_pk(customer_id: bigint!, user_id: bigint!): customer_user
+
+  """
+  fetch data from the table in a streaming manner: "customer_user"
+  """
+  customer_user_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [customer_user_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): [customer_user!]!
+
+  """
+  fetch data from the table: "device"
+  """
+  device(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): [device!]!
+
+  """
+  fetch aggregated fields from the table: "device"
+  """
+  device_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): device_aggregate!
+
+  """
+  fetch data from the table: "device" using primary key columns
+  """
+  device_by_pk(id: bigint!): device
+
+  """
+  fetch data from the table: "device_configuration"
+  """
+  device_configuration(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_configuration_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_configuration_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): [device_configuration!]!
+
+  """
+  fetch aggregated fields from the table: "device_configuration"
+  """
+  device_configuration_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_configuration_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_configuration_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): device_configuration_aggregate!
+
+  """
+  fetch data from the table: "device_configuration" using primary key columns
+  """
+  device_configuration_by_pk(id: bigint!): device_configuration
+
+  """
+  fetch data from the table in a streaming manner: "device_configuration"
+  """
+  device_configuration_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_configuration_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_configuration_bool_exp
+  ): [device_configuration!]!
+
+  """
+  fetch data from the table: "device_group"
+  """
+  device_group(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_bool_exp
+  ): [device_group!]!
+
+  """
+  fetch aggregated fields from the table: "device_group"
+  """
+  device_group_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_bool_exp
+  ): device_group_aggregate!
+
+  """
+  fetch data from the table: "device_group" using primary key columns
+  """
+  device_group_by_pk(id: bigint!): device_group
+
+  """
+  fetch data from the table: "device_group_device"
+  """
+  device_group_device(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): [device_group_device!]!
+
+  """
+  fetch aggregated fields from the table: "device_group_device"
+  """
+  device_group_device_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_group_device_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_group_device_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): device_group_device_aggregate!
+
+  """
+  fetch data from the table: "device_group_device" using primary key columns
+  """
+  device_group_device_by_pk(
+    device_group_id: bigint!
+    device_id: bigint!
+  ): device_group_device
+
+  """
+  fetch data from the table in a streaming manner: "device_group_device"
+  """
+  device_group_device_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_group_device_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_group_device_bool_exp
+  ): [device_group_device!]!
+
+  """
+  fetch data from the table in a streaming manner: "device_group"
+  """
+  device_group_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_group_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_group_bool_exp
+  ): [device_group!]!
+
+  """
+  fetch data from the table: "device_measurement_property"
+  """
+  device_measurement_property(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_property_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_property_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_property_bool_exp
+  ): [device_measurement_property!]!
+
+  """
+  fetch aggregated fields from the table: "device_measurement_property"
+  """
+  device_measurement_property_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_property_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_property_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_property_bool_exp
+  ): device_measurement_property_aggregate!
+
+  """
+  fetch data from the table: "device_measurement_property" using primary key columns
+  """
+  device_measurement_property_by_pk(id: bigint!): device_measurement_property
+
+  """
+  fetch data from the table in a streaming manner: "device_measurement_property"
+  """
+  device_measurement_property_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_measurement_property_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_property_bool_exp
+  ): [device_measurement_property!]!
+
+  """
+  fetch data from the table: "device_measurement_value"
+  """
+  device_measurement_value(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_value_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_value_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): [device_measurement_value!]!
+
+  """
+  fetch aggregated fields from the table: "device_measurement_value"
+  """
+  device_measurement_value_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_measurement_value_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_measurement_value_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): device_measurement_value_aggregate!
+
+  """
+  fetch data from the table: "device_measurement_value" using primary key columns
+  """
+  device_measurement_value_by_pk(id: bigint!): device_measurement_value
+
+  """
+  fetch data from the table in a streaming manner: "device_measurement_value"
+  """
+  device_measurement_value_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_measurement_value_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_measurement_value_bool_exp
+  ): [device_measurement_value!]!
+
+  """
+  fetch data from the table: "device_operation"
+  """
+  device_operation(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): [device_operation!]!
+
+  """
+  fetch aggregated fields from the table: "device_operation"
+  """
+  device_operation_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): device_operation_aggregate!
+
+  """
+  fetch data from the table: "device_operation" using primary key columns
+  """
+  device_operation_by_pk(id: bigint!): device_operation
+
+  """
+  fetch data from the table: "device_operation_image"
+  """
+  device_operation_image(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_image_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_image_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_image_bool_exp
+  ): [device_operation_image!]!
+
+  """
+  fetch aggregated fields from the table: "device_operation_image"
+  """
+  device_operation_image_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_image_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_image_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_image_bool_exp
+  ): device_operation_image_aggregate!
+
+  """
+  fetch data from the table: "device_operation_image" using primary key columns
+  """
+  device_operation_image_by_pk(id: bigint!): device_operation_image
+
+  """
+  fetch data from the table in a streaming manner: "device_operation_image"
+  """
+  device_operation_image_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_operation_image_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_image_bool_exp
+  ): [device_operation_image!]!
+
+  """
+  fetch data from the table: "device_operation_log"
+  """
+  device_operation_log(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_log_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_log_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_log_bool_exp
+  ): [device_operation_log!]!
+
+  """
+  fetch aggregated fields from the table: "device_operation_log"
+  """
+  device_operation_log_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_operation_log_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_operation_log_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_log_bool_exp
+  ): device_operation_log_aggregate!
+
+  """
+  fetch data from the table: "device_operation_log" using primary key columns
+  """
+  device_operation_log_by_pk(id: bigint!): device_operation_log
+
+  """
+  fetch data from the table in a streaming manner: "device_operation_log"
+  """
+  device_operation_log_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_operation_log_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_log_bool_exp
+  ): [device_operation_log!]!
+
+  """
+  fetch data from the table in a streaming manner: "device_operation"
+  """
+  device_operation_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_operation_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_operation_bool_exp
+  ): [device_operation!]!
+
+  """
+  fetch data from the table: "device_state"
+  """
+  device_state(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_state_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_state_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_state_bool_exp
+  ): [device_state!]!
+
+  """
+  fetch aggregated fields from the table: "device_state"
+  """
+  device_state_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_state_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_state_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_state_bool_exp
+  ): device_state_aggregate!
+
+  """
+  fetch data from the table: "device_state" using primary key columns
+  """
+  device_state_by_pk(id: bigint!): device_state
+
+  """
+  fetch data from the table in a streaming manner: "device_state"
+  """
+  device_state_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_state_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_state_bool_exp
+  ): [device_state!]!
+
+  """
+  fetch data from the table in a streaming manner: "device"
+  """
+  device_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_bool_exp
+  ): [device!]!
+
+  """
+  fetch data from the table: "device_type"
+  """
+  device_type(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_type_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_type_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_type_bool_exp
+  ): [device_type!]!
+
+  """
+  fetch aggregated fields from the table: "device_type"
+  """
+  device_type_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [device_type_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [device_type_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: device_type_bool_exp
+  ): device_type_aggregate!
+
+  """
+  fetch data from the table: "device_type" using primary key columns
+  """
+  device_type_by_pk(id: bigint!): device_type
+
+  """
+  fetch data from the table in a streaming manner: "device_type"
+  """
+  device_type_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [device_type_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: device_type_bool_exp
+  ): [device_type!]!
+
+  """
+  fetch data from the table: "location"
+  """
+  location(
+    """
+    distinct select on columns
+    """
+    distinct_on: [location_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [location_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: location_bool_exp
+  ): [location!]!
+
+  """
+  fetch aggregated fields from the table: "location"
+  """
+  location_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [location_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [location_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: location_bool_exp
+  ): location_aggregate!
+
+  """
+  fetch data from the table: "location" using primary key columns
+  """
+  location_by_pk(id: bigint!): location
+
+  """
+  fetch data from the table in a streaming manner: "location"
+  """
+  location_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [location_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: location_bool_exp
+  ): [location!]!
+
+  """
+  fetch data from the table: "site"
+  """
+  site(
+    """
+    distinct select on columns
+    """
+    distinct_on: [site_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [site_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): [site!]!
+
+  """
+  fetch aggregated fields from the table: "site"
+  """
+  site_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [site_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [site_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): site_aggregate!
+
+  """
+  fetch data from the table: "site" using primary key columns
+  """
+  site_by_pk(id: bigint!): site
+
+  """
+  fetch data from the table in a streaming manner: "site"
+  """
+  site_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [site_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: site_bool_exp
+  ): [site!]!
+
+  """
+  fetch data from the table: "user"
+  """
+  user(
+    """
+    distinct select on columns
+    """
+    distinct_on: [user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: user_bool_exp
+  ): [user!]!
+
+  """
+  fetch aggregated fields from the table: "user"
+  """
+  user_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: user_bool_exp
+  ): user_aggregate!
+
+  """
+  fetch data from the table: "user" using primary key columns
+  """
+  user_by_pk(id: bigint!): user
+
+  """
+  fetch data from the table in a streaming manner: "user"
+  """
+  user_stream(
+    """
+    maximum number of rows returned in a single batch
+    """
+    batch_size: Int!
+
+    """
+    cursor to stream the results returned by the query
+    """
+    cursor: [user_stream_cursor_input]!
+
+    """
+    filter the rows returned
+    """
+    where: user_bool_exp
+  ): [user!]!
+}
+
+scalar timestamp
+
+"""
+Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'.
+"""
+input timestamp_comparison_exp {
+  _eq: timestamp
+  _gt: timestamp
+  _gte: timestamp
+  _in: [timestamp!]
+  _is_null: Boolean
+  _lt: timestamp
+  _lte: timestamp
+  _neq: timestamp
+  _nin: [timestamp!]
+}
+
+scalar timestamptz
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+"""
+columns and relationships of "user"
+"""
+type user {
+  created_at: timestamptz!
+
+  """
+  An array relationship
+  """
+  customer_users(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): [customer_user!]!
+
+  """
+  An aggregate relationship
+  """
+  customer_users_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [customer_user_select_column!]
+
+    """
+    limit the number of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [customer_user_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: customer_user_bool_exp
+  ): customer_user_aggregate!
+  email: String!
+  first_name: String!
+  id: bigint!
+  is_super_user: Boolean!
+  last_name: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "user"
+"""
+type user_aggregate {
+  aggregate: user_aggregate_fields
+  nodes: [user!]!
+}
+
+"""
+aggregate fields of "user"
+"""
+type user_aggregate_fields {
+  avg: user_avg_fields
+  count(columns: [user_select_column!], distinct: Boolean): Int!
+  max: user_max_fields
+  min: user_min_fields
+  stddev: user_stddev_fields
+  stddev_pop: user_stddev_pop_fields
+  stddev_samp: user_stddev_samp_fields
+  sum: user_sum_fields
+  var_pop: user_var_pop_fields
+  var_samp: user_var_samp_fields
+  variance: user_variance_fields
+}
+
+"""
+aggregate avg on columns
+"""
+type user_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "user". All fields are combined with a logical 'AND'.
+"""
+input user_bool_exp {
+  _and: [user_bool_exp!]
+  _not: user_bool_exp
+  _or: [user_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  customer_users: customer_user_bool_exp
+  customer_users_aggregate: customer_user_aggregate_bool_exp
+  email: String_comparison_exp
+  first_name: String_comparison_exp
+  id: bigint_comparison_exp
+  is_super_user: Boolean_comparison_exp
+  last_name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+aggregate max on columns
+"""
+type user_max_fields {
+  created_at: timestamptz
+  email: String
+  first_name: String
+  id: bigint
+  last_name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate min on columns
+"""
+type user_min_fields {
+  created_at: timestamptz
+  email: String
+  first_name: String
+  id: bigint
+  last_name: String
+  updated_at: timestamptz
+}
+
+"""
+Ordering options when selecting data from "user".
+"""
+input user_order_by {
+  created_at: order_by
+  customer_users_aggregate: customer_user_aggregate_order_by
+  email: order_by
+  first_name: order_by
+  id: order_by
+  is_super_user: order_by
+  last_name: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "user"
+"""
+enum user_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  email
+
+  """
+  column name
+  """
+  first_name
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  is_super_user
+
+  """
+  column name
+  """
+  last_name
+
+  """
+  column name
+  """
+  updated_at
+}
+
+"""
+aggregate stddev on columns
+"""
+type user_stddev_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type user_stddev_pop_fields {
+  id: Float
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type user_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "user"
+"""
+input user_stream_cursor_input {
+  """
+  Stream column input with initial value
+  """
+  initial_value: user_stream_cursor_value_input!
+
+  """
+  cursor ordering
+  """
+  ordering: cursor_ordering
+}
+
+"""
+Initial value of the column from where the streaming should start
+"""
+input user_stream_cursor_value_input {
+  created_at: timestamptz
+  email: String
+  first_name: String
+  id: bigint
+  is_super_user: Boolean
+  last_name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregate sum on columns
+"""
+type user_sum_fields {
+  id: bigint
+}
+
+"""
+aggregate var_pop on columns
+"""
+type user_var_pop_fields {
+  id: Float
+}
+
+"""
+aggregate var_samp on columns
+"""
+type user_var_samp_fields {
+  id: Float
+}
+
+"""
+aggregate variance on columns
+"""
+type user_variance_fields {
+  id: Float
+}
