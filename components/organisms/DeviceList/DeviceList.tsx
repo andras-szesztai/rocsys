@@ -1,14 +1,13 @@
 'use client'
 
-import { Tile } from 'components/molecules/Tile'
 import { useSelectedLayoutSegments } from 'next/navigation'
+
+import { Tile } from 'components/molecules/Tile'
 
 import { Props } from './types'
 
 const DeviceList = ({ devices }: Props) => {
     const segments = useSelectedLayoutSegments()
-    console.log(devices, segments[0])
-
     return (
         <ul className="flex flex-col gap-y-2">
             {devices.map((device) => (
