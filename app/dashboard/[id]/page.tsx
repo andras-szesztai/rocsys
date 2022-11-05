@@ -1,8 +1,15 @@
 import { graphqlClient } from 'lib/graphql-client'
-import { getDevice } from 'operations/device'
+import { getAllDevices, getDevice } from 'operations/device'
 
 interface PageProps {
     params?: { id?: string }
+}
+
+export async function generateStaticParams() {
+    const { device: allDevices } = await graphqlClient.request(getAllDevices)
+    return allDevices.map((device) => ({
+        id: `${device.id}`,
+    }))
 }
 
 const SelectedRocPage = async ({ params }: PageProps) => {
