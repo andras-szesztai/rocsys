@@ -3,8 +3,9 @@ import { render, screen } from '@testing-library/react'
 
 import NavLink from './NavLink'
 
+let mockReturn: string[] = []
 jest.mock('next/navigation', () => ({
-    useSelectedLayoutSegments: () => ['dashboard', '1'],
+    useSelectedLayoutSegments: () => mockReturn,
 }))
 
 describe('NavLink', () => {
@@ -13,6 +14,7 @@ describe('NavLink', () => {
         expect(screen.getByRole('link')).toBeInTheDocument()
     })
     it('renders with correct style when active and inactive', () => {
+        mockReturn = ['dashboard', '1']
         render(
             <>
                 <NavLink text="Settings" href="/settings" />
