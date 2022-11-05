@@ -12,6 +12,7 @@ describe('Dashboard', () => {
         cy.visit('/dashboard')
     })
 
+    // TODO select single device
     it('displays correct list of devices', () => {
         cy.wait('@graphqlRequest')
         cy.contains('Roc One').as('tileOneTitle')
