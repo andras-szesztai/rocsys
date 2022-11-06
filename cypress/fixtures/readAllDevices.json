@@ -1,0 +1,34 @@
+{
+    "data": {
+        "device": [
+            {
+                "id": "1",
+                "name": "Roc One",
+                "device_type": {
+                    "name": "Roc One Type"
+                }
+            },
+            {
+                "id": "2",
+                "name": "Roc Two",
+                "device_type": {
+                    "name": "Roc Two Type"
+                }
+            },
+            {
+                "id": "3",
+                "name": "Roc Three",
+                "device_type": {
+                    "name": "Roc Three Type"
+                }
+            },
+            {
+                "id": "4",
+                "name": "Roc Four",
+                "device_type": {
+                    "name": "Roc Four Type"
+                }
+            }
+        ]
+    }
+}

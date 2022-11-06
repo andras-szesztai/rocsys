@@ -9,10 +9,13 @@
         "lint": "next lint",
         "prepare": "husky install",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "codegen": "graphql-codegen --watch -r dotenv/config"
     },
     "dependencies": {
         "classnames": "^2.3.2",
+        "graphql": "^16.6.0",
+        "graphql-request": "^5.0.0",
         "next": "13.0.0",
         "react": "^18",
         "react-dom": "^18"
@@ -20,6 +23,8 @@
     "devDependencies": {
         "@commitlint/cli": "^17.1.2",
         "@commitlint/config-conventional": "^17.1.0",
+        "@graphql-codegen/cli": "2.13.8",
+        "@graphql-codegen/client-preset": "1.1.1",
         "@jest/globals": "^29.2.2",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",

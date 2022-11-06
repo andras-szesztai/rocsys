@@ -10,7 +10,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
             <title>Rocsys</title>
         </head>
         <body className="h-full">
-            <div className="min-h-full">
+            <div className="min-h-full flex flex-col">
                 <nav className="bg-gray-800">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="flex h-16 items-center justify-between">
@@ -33,8 +33,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
                     </div>
                 </nav>
                 <PageHeader />
-                <main>
-                    <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                <main className="flex-1 relative">
+                    <div className="mx-auto max-w-7xl py-6 px-8 h-96">
                         {children}
                     </div>
                 </main>

@@ -1,7 +1,7 @@
-import { Tile } from 'components/molecules/Tile'
-
-const Page = () => (
-    <Tile title="My tile" subtitle="Subtitle" href="/hello" isActive={false} />
+const DashboardPage = async () => (
+    <h3 className="text-black text-xl whitespace-nowrap truncate overflow-hidden">
+        Please select a ROC to see details!
+    </h3>
 )
 
-export default Page
+export default DashboardPage
