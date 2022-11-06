@@ -1,0 +1,11 @@
+{
+    "data": {
+        "device": [
+            {
+                "id": "1",
+                "name": "Roc One",
+                "description": "This is the test ROC description"
+            }
+        ]
+    }
+}

@@ -18,9 +18,6 @@ export const getDevice = graphql(`
             id
             name
             description
-            device_type {
-                name
-            }
         }
     }
 `)
